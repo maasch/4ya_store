@@ -1,15 +1,16 @@
+import { Link } from 'react-router'
 import './header.css'
 export default () => {
   return (
     <div className="amazon-header">
       <div className="amazon-header-left-section">
-        <a href="index.html" className="header-link">
+        <Link to="/" className="header-link">
           <img className="amazon-logo" src="images/amazon-logo-white.png" />
           <img
             className="amazon-mobile-logo"
             src="images/amazon-mobile-logo-white.png"
           />
-        </a>
+        </Link>
       </div>
 
       <div className="amazon-header-middle-section">
@@ -25,16 +26,16 @@ export default () => {
       </div>
 
       <div className="amazon-header-right-section">
-        <a className="orders-link header-link" href="orders.html">
+        <Link className="orders-link header-link" to="/orders">
           <span className="returns-text">Returns</span>
           <span className="orders-text">& Orders</span>
-        </a>
+        </Link>
 
-        <a className="cart-link header-link" href="checkout.html">
+        <Link className="cart-link header-link" to="/checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" />
           <div className="cart-quantity js-cart-quantity"></div>
           <div className="cart-text">Cart</div>
-        </a>
+        </Link>
       </div>
     </div>
   )

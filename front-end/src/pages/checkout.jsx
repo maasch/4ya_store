@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import './checkout-header.css'
 import './checkout-main.css'
 export default () => {
@@ -7,20 +8,20 @@ export default () => {
       <div className="checkout-header">
         <div className="header-content">
           <div className="checkout-header-left-section">
-            <a href="index.html">
+            <Link to="/">
               <img className="amazon-logo" src="images/amazon-logo.png" />
               <img
                 className="amazon-mobile-logo"
                 src="images/amazon-mobile-logo.png"
               />
-            </a>
+            </Link>
           </div>
 
           <div className="checkout-header-middle-section">
-            Checkout (<a
+            Checkout (<Link
               className="return-to-home-link items-quantity"
-              href="index.html"
-            ></a>)
+              to="/"
+            ></Link>)
           </div>
 
           <div className="checkout-header-right-section">
