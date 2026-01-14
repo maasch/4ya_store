@@ -5,9 +5,9 @@ export default () => {
     <>
       <title>4YA Store</title>
       <Header />
-      <div className="main">
+      <div className="home-main">
         <div className="products-grid">
-          {/* <div className="product-container">
+          <div className="product-container">
             <div className="product-image-container">
               <img className="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg" />
             </div>
@@ -103,7 +103,7 @@ export default () => {
             <button className="add-to-cart-button button-primary add-to-cart-js" data-product-id="15b6fc6f-327a-4ec4-896f-486349e85a3d">
               Add to Cart
             </button>
-          </div> */}
+          </div>
 
         </div>
       </div>
