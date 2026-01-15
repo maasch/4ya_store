@@ -12,9 +12,9 @@ export default defineConfig({
   ],
   server: {
     port: 5000,
-  },
-  proxy: {
-    '/api': 'http://localhost:3000',
-    '/cart': 'http://localhost:3000',
+    proxy: {
+      '/api': 'http://localhost:3000',
+      '/images': 'http://localhost:3000',
+    },
   },
 });

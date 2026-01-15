@@ -1,4 +1,4 @@
-import Header from '../components/header.jsx'
+import Header from '../../components/header.jsx'
 import './orders.css'
 export default () => {
   return (

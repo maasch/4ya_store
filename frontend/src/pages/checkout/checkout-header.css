@@ -95,6 +95,9 @@
   text-align: right;
   width: 150px;
 }
+.checkout-header-right-section img {
+  width: 40px;
+}
 
 @media (max-width: 1000px) {
   .checkout-header-right-section {

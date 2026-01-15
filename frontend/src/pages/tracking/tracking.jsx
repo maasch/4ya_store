@@ -1,4 +1,4 @@
-import Header from '../components/header.jsx'
+import Header from '../../components/header.jsx'
 import './tracking.css'
 export default () => {
   return (
