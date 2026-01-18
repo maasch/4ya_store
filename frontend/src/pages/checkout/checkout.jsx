@@ -1,7 +1,39 @@
-import { Link } from 'react-router'
-import './checkout-header.css'
-import './checkout-main.css'
-export default () => {
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import './checkout-header.css';
+import './checkout-main.css';
+import OrderSummary from './order-summary.jsx';
+import PaymentSummary from './PaymentSummary.jsx';
+
+export default ({ cart, loadCart }) => {
+  const navigate = useNavigate();
+  let totalQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    totalQuantity += cartItem.quantity;
+  });
+  const [deliveryOptions, setDeliveryOptions] = useState([]);
+  const [paymentSummary, setPaymentSummary] = useState(null);
+  
+  const refreshData = async () => {
+    const response = await axios.get('/api/payment-summary');
+    setPaymentSummary(response.data);
+    await loadCart();
+  };
+
+  useEffect(() => {
+    async function fetchDeliveryOptions() {
+      let response = await axios.get(
+        'api/delivery-options?expand=estimatedDeliveryTime'
+      );
+      setDeliveryOptions(response.data);
+      response = await axios.get('/api/payment-summary');
+      setPaymentSummary(response.data);
+    }
+    fetchDeliveryOptions();
+  }, []);
+
   return (
     <>
       <title>Checkout</title>
@@ -18,10 +50,11 @@ export default () => {
           </div>
 
           <div className="checkout-header-middle-section">
-            Checkout (<Link
-              className="return-to-home-link items-quantity"
-              to="/"
-            ></Link>)
+            Checkout (
+            <Link className="return-to-home-link items-quantity" to="/">
+              {totalQuantity}
+            </Link>
+            )
           </div>
 
           <div className="checkout-header-right-section">
@@ -34,11 +67,24 @@ export default () => {
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-          <div className="order-summary js-order-summary"></div>
-
-          <div className="payment-summary"></div>
+          <OrderSummary 
+            cart={cart} 
+            deliveryOptions={deliveryOptions} 
+            onUpdate={refreshData}
+          />
+          <PaymentSummary 
+            paymentSummary={paymentSummary} 
+            onPlaceOrder={async () => {
+              try {
+                await axios.post('/api/orders');
+                navigate('/orders');
+              } catch (error) {
+                console.log('Something went wrong. Please try again later.');
+              }
+            }}
+          />
         </div>
       </div>
     </>
-  )
-}
+  );
+};
