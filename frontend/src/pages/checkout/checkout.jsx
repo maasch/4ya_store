@@ -15,7 +15,7 @@ export default ({ cart, loadCart }) => {
   });
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
-  
+
   const refreshData = async () => {
     const response = await axios.get('/api/payment-summary');
     setPaymentSummary(response.data);
@@ -67,17 +67,18 @@ export default ({ cart, loadCart }) => {
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-          <OrderSummary 
-            cart={cart} 
-            deliveryOptions={deliveryOptions} 
+          <OrderSummary
+            cart={cart}
+            deliveryOptions={deliveryOptions}
             onUpdate={refreshData}
           />
-          <PaymentSummary 
-            paymentSummary={paymentSummary} 
+          <PaymentSummary
+            paymentSummary={paymentSummary}
             onPlaceOrder={async () => {
               try {
                 await axios.post('/api/orders');
                 navigate('/orders');
+                loadCart();
               } catch (error) {
                 console.log('Something went wrong. Please try again later.');
               }

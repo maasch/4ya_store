@@ -1,11 +1,15 @@
-import { Link, useNavigate } from 'react-router';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import './header.css';
 
 export default ({ cart }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  let userInfo = {
+    isUser: false,
+    name: 'Adel maach',
+  };
   let totalQuantity = 0;
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
@@ -14,44 +18,98 @@ export default ({ cart }) => {
   const handleSearch = () => {
     if (searchTerm.trim()) {
       navigate(`/?search_query=${encodeURIComponent(searchTerm.trim())}`);
+      setIsSearchMode(false);
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleSearch();
+    } else if (event.key === 'Escape') {
+      setIsSearchMode(false);
+      setSearchTerm('');
+    }
+  };
+
+  const toggleSearchMode = () => {
+    setIsSearchMode(!isSearchMode);
+    if (!isSearchMode) {
+      setSearchTerm('');
     }
   };
 
   return (
-    <div className="amazon-header">
-      <div className="amazon-header-left-section">
-        <Link to="/" className="header-link">
-          <img className="amazon-logo" src="images/amazon-logo-white.png" />
+    <div className={`amazon-header ${isSearchMode ? 'search-mode-active' : ''}`}>
+      <div className={`amazon-header-left-section ${isSearchMode ? 'hidden-mobile' : ''}`}>
+        <Link to="/" className="logos">
+          <img className="amazon-logo" src="images/4ya-logo.png" />
           <img
             className="amazon-mobile-logo"
-            src="images/amazon-mobile-logo-white.png"
+            src="images/4ya-logo-mobile.png"
           />
         </Link>
       </div>
 
       <div className="amazon-header-middle-section">
         <input
-          className="search-bar user-search"
+          className={`search-bar user-search ${isSearchMode ? 'show-mobile' : ''}`}
           type="text"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
+          autoFocus={isSearchMode}
         />
 
-        <button className="search-button js-search-btn" onClick={handleSearch}>
-          <img className="search-icon" src="images/icons/search-icon.png" />
+        <button 
+          className="search-button js-search-btn" 
+          onClick={isSearchMode ? (searchTerm.trim() ? handleSearch : toggleSearchMode) : toggleSearchMode}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1.8em"
+            height="1.8em"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill="#fff"
+              d="m15.504 13.616l-3.79-3.223c-.392-.353-.811-.514-1.149-.499a6 6 0 1 0-.672.672c-.016.338.146.757.499 1.149l3.223 3.79c.552.613 1.453.665 2.003.115s.498-1.452-.115-2.003zM6 10a4 4 0 1 1 0-8a4 4 0 0 1 0 8"
+            />
+          </svg>
         </button>
       </div>
 
-      <div className="amazon-header-right-section">
-        <Link className="orders-link header-link" to="/orders">
+      <div className={`amazon-header-right-section ${isSearchMode ? 'search-mode-right' : ''}`}>
+        {userInfo.isUser ? (
+          <Link className={`account-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`} to="/account">
+            <div className="userInfo">
+              <p className="name">{userInfo.name}</p>
+            </div>
+
+            <svg
+              className="pfp-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <g
+                fill="none"
+                stroke="#fff"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.3"
+              >
+                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2" />
+                <path d="M4.271 18.346S6.5 15.5 12 15.5s7.73 2.846 7.73 2.846M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
+              </g>
+            </svg>
+          </Link>
+        ) : (
+          <Link className={`header-link not-auth ${isSearchMode ? 'hidden-mobile' : ''}`} to="/signin">
+            <p className="signin"> Sign In</p>
+          </Link>
+        )}
+
+        <Link className={`orders-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`} to="/orders">
           <span className="returns-text">Returns</span>
           <span className="orders-text">& Orders</span>
         </Link>
