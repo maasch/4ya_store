@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 import formatCurrency from '../../utils/money.js';
 import styles from './home.module.css';
 
@@ -14,15 +14,15 @@ export default ({ product, loadCart }) => {
       quantity,
     });
     await loadCart();
-    
+
     // Show "Added to cart" message
     setShowAdded(true);
-    
+
     // Clear previous timeout if exists
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
+
     // Hide after 2 seconds
     timeoutRef.current = setTimeout(() => {
       setShowAdded(false);
@@ -32,36 +32,6 @@ export default ({ product, loadCart }) => {
   const selectQuantity = (event) => {
     const quantitySelected = Number(event.target.value);
     setQuantity(quantitySelected);
-  };
-
-  const renderSizeChart = () => {
-    if (product.type === 'clothing' && product.sizeChartLink) {
-      return (
-        <a href={product.sizeChartLink} target="_blank" rel="noopener noreferrer">
-          Size Chart
-        </a>
-      );
-    }
-    if (product.type === 'Appliance') {
-      return (
-        <>
-          {product.instructionsLink && (
-            <>
-              <a href={product.instructionsLink} target="_blank" rel="noopener noreferrer">
-                Instructions
-              </a>
-              <br />
-            </>
-          )}
-          {product.warrantyLink && (
-            <a href={product.warrantyLink} target="_blank" rel="noopener noreferrer">
-              Warranty
-            </a>
-          )}
-        </>
-      );
-    }
-    return null;
   };
 
   return (
@@ -92,40 +62,51 @@ export default ({ product, loadCart }) => {
         {formatCurrency(product.priceCents)}
       </div>
 
-      <div className={styles.productQuantityContainer}>
-        <select
-          value={quantity}
-          onChange={selectQuantity}
-          className={`js-quantity-selected-${product.id}`}
+      {!showAdded ? (
+        <div className={styles.productQuantityContainer}>
+          <select
+            value={quantity}
+            onChange={selectQuantity}
+            className={`js-quantity-selected-${product.id}`}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      ) : (
+        <div
+          className={`${styles.addedToCart}
+        ${showAdded ? styles.jsAddedToCart : ''}`}
         >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-      </div>
-
-      <div className={styles.productSpacer}>
-        {renderSizeChart()}
-      </div>
-
-      <div className={`${styles.addedToCart} ${showAdded ? styles.jsAddedToCart : ''}`}>
-        <img src="images/icons/checkmark.png" />
-        Added
-      </div>
+          <img src="images/icons/checkmark.png" />
+          Added
+        </div>
+      )}
 
       <button
         className={`${styles.addToCartButton} button-primary add-to-cart-js`}
         data-product-id={product.id}
         onClick={addToCart}
       >
-        Add to Cart
+        <p>Add to Cart</p>
+        <svg
+          className={styles.addToCartIcon}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill="#fff"
+            d="M2.5 2a.5.5 0 0 0 0 1h.246a.5.5 0 0 1 .48.363l1.586 5.55A1.5 1.5 0 0 0 6.254 10h4.569a1.5 1.5 0 0 0 1.393-.943l1.474-3.686A1 1 0 0 0 12.762 4H4.448l-.261-.912A1.5 1.5 0 0 0 2.746 2zm4 12a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m4 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3"
+          />
+        </svg>
       </button>
     </div>
   );

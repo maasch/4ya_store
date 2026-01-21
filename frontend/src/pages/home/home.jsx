@@ -13,19 +13,19 @@ export default ({ cart, loadCart }) => {
   useEffect(() => {
     axios.get('/api/products').then((response) => {
       let allProducts = response.data;
-      
+
       // Filter products based on search query
       if (searchQuery) {
         const searchTerm = searchQuery.toLowerCase();
         allProducts = allProducts.filter((product) => {
           const searchData = (
-            product.name + 
+            product.name +
             (product.keywords ? ' ' + product.keywords.join(' ') : '')
           ).toLowerCase();
           return searchData.includes(searchTerm);
         });
       }
-      
+
       setProducts(allProducts);
     });
   }, [searchQuery]);
@@ -35,6 +35,7 @@ export default ({ cart, loadCart }) => {
       <title>4YA Store</title>
       <Header cart={cart} />
       <div className={styles.homeMain}>
+        <h2>Trending Now</h2>
         <ProductsGrid products={products} loadCart={loadCart} />
       </div>
     </>

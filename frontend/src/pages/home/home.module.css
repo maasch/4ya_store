@@ -1,44 +1,22 @@
 .homeMain {
-  margin-top: 60px;
+  margin-block: 85px 20px;
+  padding-inline: 20px;
+}
+h2 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+:root {
+  --fs-d: 18px;
+  --fs-n: 16px;
 }
 
 .productsGrid {
   display: grid;
-
-  /* - In CSS Grid, 1fr means a column will take up the
-       remaining space in the grid.
-     - If we write 1fr 1fr ... 1fr; 8 times, this will
-       divide the grid into 8 columns, each taking up an
-       equal amount of the space.
-     - repeat(8, 1fr); is a shortcut for repeating "1fr"
-       8 times (instead of typing out "1fr" 8 times).
-       repeat(...) is a special property that works with
-       display: grid; */
-  grid-template-columns: repeat(8, 1fr);
-}
-
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 2000px or less, we
-   will divide the grid into 7 columns instead of 8. */
-@media (max-width: 2000px) {
-  .productsGrid {
-    grid-template-columns: repeat(7, 1fr);
-  }
-}
-
-/* This @media means when the screen width is 1600px or
-   less, we will divide the grid into 6 columns. */
-@media (max-width: 1600px) {
-  .productsGrid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-@media (max-width: 1300px) {
-  .productsGrid {
-    grid-template-columns: repeat(5, 1fr);
-  }
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 30px;
+  row-gap: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -51,63 +29,72 @@
   .productsGrid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .productImageContainer {
+    margin-bottom: 10px !important;
+    overflow: hidden;
+    height: 180px !important;
+    border-radius: 20px;
+  }
+
+  :root {
+    --fs-d: 16px;
+    --fs-n: 15px;
+  }
 }
 
 @media (max-width: 575px) {
   .productsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
+  .productImageContainer {
+    margin-bottom: 5px !important;
+    overflow: hidden;
+    height: 150px !important;
+    border-radius: 20px;
+  }
 
-@media (max-width: 450px) {
-  .productsGrid {
-    grid-template-columns: 1fr;
+  :root {
+    --fs-d: 14px;
+    --fs-n: 14px;
   }
 }
 
 .productContainer {
-  padding-top: 40px;
-  padding-bottom: 25px;
-  padding-left: 25px;
-  padding-right: 25px;
-
-  border-right: 1px solid rgb(231, 231, 231);
-  border-bottom: 1px solid rgb(231, 231, 231);
-
+  border: 1px solid rgba(0, 147, 0, 0.3);
+  padding: 0px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
 }
 
 .productImageContainer {
-  width: 100%;
-  height: 180px;
   margin-bottom: 20px;
   overflow: hidden;
+  height: 200px;
+  border-radius: 20px;
 }
 
 .productImage {
-  /* Images will overflow their container by default. To
-    prevent this, we set max-width and max-height to 100%
-    so they stay inside their container. */
   width: 100%;
   height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  min-width: 0;
-  min-height: 0;
   object-fit: cover;
   display: block;
 }
 
 .productName {
   height: 40px;
+  text-align: center;
+  font-weight: 600;
   margin-bottom: 5px;
+  font-size: var(--fs-n);
 }
 
 .productRatingContainer {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 10px;
+  gap: 10px;
 }
 
 .productRatingStars {
@@ -116,18 +103,44 @@
 }
 
 .productRatingCount {
-  color: rgb(1, 124, 182);
+  color: var(--green);
   cursor: pointer;
+  font-weight: 600;
+  font-size: var(--fs-n);
   margin-top: 3px;
+  border-radius: 50px;
+  padding-inline: 5px;
+  border: 3px solid var(--green);
+  border-bottom: none;
+  border-top: none;
 }
-
+.productRatingCount:hover {
+  cursor: auto !important;
+  color: var(--green) !important;
+}
 .productPrice {
   font-weight: 700;
   margin-bottom: 10px;
+  text-align: center;
+  font-size: var(--fs-d);
 }
 
 .productQuantityContainer {
-  margin-bottom: 17px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+}
+.productQuantityContainer select {
+  width: 75%;
+  text-align: center;
+  font-size: var(--fs-d);
+  font-weight: 600;
+  border: 2px solid var(--green);
+  color: var(--green);
+  border-radius: 20px;
+}
+.productQuantityContainer select:focus {
+  outline: 1px solid var(--green);
 }
 
 .productSpacer {
@@ -136,26 +149,21 @@
 
 .addedToCart {
   color: rgb(6, 125, 98);
-  font-size: 16px;
-
+  font-size: var(--fs-d);
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 8px;
-
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
   opacity: 0;
+  height: 30px;
 }
 
 .jsAddedToCart {
   color: rgb(6, 125, 98);
-  font-size: 16px;
-
+  font-size: var(--fs-d);
   display: flex;
   align-items: center;
   margin-bottom: 8px;
-
   /* At first, the "Added to cart" message will
      be invisible. Use JavaScript to change the
      opacity and make it visible. */
@@ -163,12 +171,20 @@
 }
 
 .addedToCart img {
-  height: 20px;
+  height: 25px;
   margin-right: 5px;
 }
 
 .addToCartButton {
   width: 100%;
-  padding: 8px;
-  border-radius: 50px;
+  padding: 4px;
+  border-radius: 50px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.addToCartIcon {
+  width: 1.8em;
+  height: 1.8em;
 }
