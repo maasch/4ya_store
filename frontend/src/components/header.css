@@ -69,7 +69,7 @@
     width: 45px;
     justify-content: center;
   }
-  
+
   .pfp-icon {
     margin: auto 0;
   }
@@ -251,8 +251,8 @@
   padding-left: 16px;
   padding-right: 16px;
   border: 2px solid transparent;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+  border-top-left-radius: 19px;
+  border-bottom-left-radius: 19px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   background-color: var(--white);
@@ -277,8 +277,8 @@
   background-color: var(--green);
   border: none;
   width: 50px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 19px;
+  border-bottom-right-radius: 19px;
   flex-shrink: 0;
   cursor: pointer;
   display: flex;
