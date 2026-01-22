@@ -1,11 +1,11 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import Header from '../../components/header.jsx';
+import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
+import Header from '../../components/header/header.jsx';
 import formatMoney from '../../utils/money.js';
 import './orders.css';
-
 export default ({ cart, loadCart }) => {
   const [orders, setOrders] = useState([]);
 
@@ -31,83 +31,93 @@ export default ({ cart, loadCart }) => {
         <div className="orders-page">
           <div className="page-title">Your Orders</div>
 
-          <div className="orders-grid">
-            {orders.map((order) => {
-              return (
-                <div key={order.id} className="order-container">
-                  <div className="order-header">
-                    <div className="order-header-left-section">
-                      <div className="order-date">
-                        <div className="order-header-label">Order Placed:</div>
-                        <div>{dayjs(order.orderTimeMs).format('MMMM D')}</div>
+          {orders.length != 0 ? (
+            <div className="orders-grid">
+              {orders.map((order) => {
+                return (
+                  <div key={order.id} className="order-container">
+                    <div className="order-header">
+                      <div className="order-header-left-section">
+                        <div className="order-date">
+                          <div className="order-header-label">
+                            Order Placed :
+                          </div>
+                          <div className='lab-value'>{dayjs(order.orderTimeMs).format('MMMM D')}</div>
+                        </div>
+                        <div className="order-total">
+                          <div className="order-header-label">Total :</div>
+                          <div className='lab-value'>{formatMoney(order.totalCostCents)}</div>
+                        </div>
                       </div>
-                      <div className="order-total">
-                        <div className="order-header-label">Total:</div>
-                        <div>{formatMoney(order.totalCostCents)}</div>
+
+                      <div className="order-header-right-section">
+                        <div className="order-header-label">Order ID :</div>
+                        <div className='lab-value'>{order.id}</div>
                       </div>
                     </div>
 
-                    <div className="order-header-right-section">
-                      <div className="order-header-label">Order ID:</div>
-                      <div>{order.id}</div>
-                    </div>
-                  </div>
+                    <div className="order-details-grid">
+                      {order.products.map((orderProduct) => {
+                        const matchProduct = orderProduct.product;
 
-                  <div className="order-details-grid">
-                    {order.products.map((orderProduct) => {
-                      const matchProduct = orderProduct.product;
-                      
-                      return (
-                        <Fragment key={`${order.id}-${orderProduct.productId}`}>
-                          <div className="product-image-container">
-                            <img src={matchProduct.image} />
-                          </div>
+                        return (
+                          <div className='product-container'>
+                            <div className="product-image-container">
+                              <img src={matchProduct.image} />
+                            </div>
 
-                          <div className="product-details">
-                            <div className="product-name">
-                              {matchProduct.name}
-                            </div>
-                            <div className="product-delivery-date">
-                              Arriving on:{' '}
-                              {dayjs(
-                                orderProduct.estimatedDeliveryTimeMs
-                              ).format('MMMM D')}
-                            </div>
-                            <div className="product-quantity">
-                              Quantity: {orderProduct.quantity}
-                            </div>
-                            <button 
-                              className="buy-again-button button-primary js-buy-again"
-                              data-product-id={matchProduct.id}
-                              onClick={() => handleBuyAgain(matchProduct.id)}
-                            >
-                              <img
-                                className="buy-again-icon"
-                                src="images/icons/buy-again.png"
-                              />
-                              <span className="buy-again-message">
-                                Buy it again
-                              </span>
-                            </button>
-                          </div>
-
-                          <div className="product-actions">
-                            <Link 
-                              to={`/tracking?orderId=${order.id}&productId=${matchProduct.id}`}
-                            >
-                              <button className="track-package-button button-secondary">
-                                Track package
+                            <div className="product-details">
+                              <div className="product-name">
+                                {matchProduct.name}
+                              </div>
+                              <div className="product-delivery-date">
+                                <span>Arriving on:</span>{' '}
+                                {dayjs(
+                                  orderProduct.estimatedDeliveryTimeMs
+                                ).format('MMMM D')}
+                              </div>
+                              <div className="product-quantity">
+                                <span>Quantity: </span>{orderProduct.quantity}
+                              </div>
+                              <button
+                                className="buy-again-button button-primary js-buy-again"
+                                data-product-id={matchProduct.id}
+                                onClick={() => handleBuyAgain(matchProduct.id)}
+                              >
+                                <img
+                                  className="buy-again-icon"
+                                  src="images/icons/buy-again.png"
+                                />
+                                <span className="buy-again-message">
+                                  Buy it again
+                                </span>
                               </button>
-                            </Link>
+                            </div>
+
+                            <div className="product-actions">
+                              <Link
+                                to={`/tracking?orderId=${order.id}&productId=${matchProduct.id}`}
+                              >
+                                <button className="track-package-button button-secondary">
+                                  Track package
+                                </button>
+                              </Link>
+                            </div>
                           </div>
-                        </Fragment>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <EmptyContainer
+              message={'You haven’t placed any orders yet.'}
+              link={'/checkout'}
+              redirectMessage={'Shop now'}
+            />
+          )}
         </div>
       </div>
     </>

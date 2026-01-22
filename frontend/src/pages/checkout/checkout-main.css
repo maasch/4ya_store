@@ -1,22 +1,23 @@
+:root {
+  --fs-h1: 18px;
+  --fs-h2: 16px;
+  --fs-pt: 22px;
+  --fs-dt: 20px;
+  --prd-img-width: 170px;
+}
 .main {
   max-width: 1100px;
   padding-left: 30px;
   padding-right: 30px;
-
-  margin-top: 140px;
+  margin-top: 110px !important;
   margin-bottom: 100px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
 
 .page-title {
   font-weight: 700;
-  font-size: 22px;
+  font-size: var(--fs-pt);
   margin-bottom: 18px;
 }
 
@@ -32,20 +33,38 @@
   align-items: start;
 }
 
-@media (max-width: 1000px) {
-  .main {
-    max-width: 500px;
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 20px !important;
+  }
+  .amazon-logo {
+    width: 100px !important;
+    margin-top: 12px;
   }
 
+  :root {
+    --fs-h1: 17px;
+    --fs-h2: 15px;
+    --fs-pt: 20px;
+    --fs-dt: 18px;
+  }
+}
+@media (max-width: 1000px) {
   .checkout-grid {
     grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-weight: 700;
+    font-size: var(--fs-pt);
+    margin-bottom: 18px;
   }
 }
 
 .cart-item-container,
 .payment-summary {
-  border: 1px solid rgb(222, 222, 222);
-  border-radius: 4px;
+  border: 1px solid rgb(1, 147, 0, 0.3);
+  border-radius: 20px;
   padding: 18px;
 }
 
@@ -54,82 +73,98 @@
 }
 
 .payment-summary {
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 
 @media (max-width: 1000px) {
   .payment-summary {
-    /* grid-row: 1 means this element will be placed into row
-      1 in the grid. (Normally, the row that an element is
-      placed in is determined by the order of the elements in
-      the HTML. grid-row overrides this default ordering). */
     grid-row: 1;
     margin-bottom: 12px;
   }
 }
 
 .delivery-date {
-  color: rgb(0, 118, 0);
+  color: var(--green);
   font-weight: 700;
-  font-size: 19px;
+  font-size: var(--fs-dt);
   margin-top: 5px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .cart-item-details-grid {
   display: grid;
-  /* 100px 1fr 1fr; means the 2nd and 3rd column will
-     take up half the remaining space in the grid
-     (they will divide up the remaining space evenly). */
-  grid-template-columns: 100px 1fr 1fr;
-  column-gap: 25px;
+  grid-template-columns: var(--prd-img-width) 1fr 1fr;
+  column-gap: 20px;
 }
 
 @media (max-width: 1000px) {
   .cart-item-details-grid {
-    grid-template-columns: 100px 1fr;
+    display: grid;
+    grid-template-columns: var(--prd-img-width) 1fr;
     row-gap: 30px;
   }
 }
+@media (max-width: 430px) {
+  .cart-item-details-grid {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+  }
 
+  :root {
+    --fs-h1: 16px;
+    --fs-h2: 14px;
+    --fs-dt: 17px;
+  }
+}
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 .product-image {
   max-width: 100%;
-  max-height: 120px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
-  margin-left: auto;
-  margin-right: auto;
+  border-radius: 20px;
 }
 
 .product-name {
   font-weight: 700;
   margin-bottom: 8px;
+  font-size: var(--fs-h1);
 }
 
 .product-price {
-  color: rgb(177, 39, 4);
+  color: var(--green);
   font-weight: 700;
   margin-bottom: 5px;
+  font-size: var(--fs-h1);
 }
-
+.qunt-ct {
+  display: flex;
+}
+.qunt,
+.quantity-label {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+}
+.product-quantity {
+  display: flex;
+  align-items: center;
+}
 .product-quantity .link-primary {
   margin-left: 3px;
+}
+.delivery-options-grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(0, 118, 0, 0.3);
+  border-radius: 20px;
+  padding: 6px 10px;
+  gap: 10px;
 }
 
 @media (max-width: 1000px) {
   .delivery-options {
-    /* grid-column: 1 means this element will be placed
-       in column 1 in the grid. (Normally, the column that
-       an element is placed in is determined by the order
-       of the elements in the HTML. grid-column overrides
-       this default ordering).
-
-       / span 2 means this element will take up 2 columns
-       in the grid (Normally, each element takes up 1
-       column in the grid). */
     grid-column: 1 / span 2;
   }
 }
@@ -137,22 +172,32 @@
 .delivery-options-title {
   font-weight: 700;
   margin-bottom: 10px;
+  font-size: var(--fs-h1);
 }
 
 .delivery-option {
   display: grid;
   grid-template-columns: 24px 1fr;
-  margin-bottom: 12px;
   cursor: pointer;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px solid white;
+}
+.delivery-option:hover {
+  border: 1px solid rgb(0, 118, 0, 0.3);
+  border-radius: 20px;
+  padding: 5px;
 }
 
 .delivery-option-input {
   margin-left: 0px;
   cursor: pointer;
+  accent-color: var(--green);
 }
 
 .delivery-option-date {
-  color: rgb(0, 118, 0);
+  color: var(--green);
   font-weight: 500;
   margin-bottom: 3px;
 }
@@ -164,27 +209,26 @@
 
 .payment-summary-title {
   font-weight: 700;
-  font-size: 18px;
+  font-size: var(--fs-h1) !important;
   margin-bottom: 12px;
 }
 
 .payment-summary-row {
   display: grid;
-  /* 1fr auto; means the width of the 2nd column will be
-     determined by the elements inside the column (auto).
-     The 1st column will take up the remaining space. */
   grid-template-columns: 1fr auto;
 
-  font-size: 15px;
+  font-size: var(--fs-h2);
   margin-bottom: 9px;
 }
 
 .payment-summary-money {
   text-align: right;
+  color: var(--green);
+  font-weight: 600;
 }
 
 .subtotal-row .payment-summary-money {
-  border-top: 1px solid rgb(222, 222, 222);
+  border-top: 1px solid rgb(0, 118, 0, 0.3);
 }
 
 .subtotal-row div {
@@ -192,11 +236,10 @@
 }
 
 .total-row {
-  color: rgb(177, 39, 4);
+  color: var(--green);
   font-weight: 700;
-  font-size: 18px;
-
-  border-top: 1px solid rgb(222, 222, 222);
+  font-size: var(--fs-h1);
+  border-top: 1px solid rgb(0, 118, 0, 0.3);
   padding-top: 18px;
 }
 
@@ -204,15 +247,51 @@
   width: 100%;
   padding-top: 12px;
   padding-bottom: 12px;
-  border-radius: 8px;
-
+  border-radius: 20px !important;
   margin-top: 11px;
   margin-bottom: 15px;
+  font-size: var(--fs-h2) !important;
+}
+.delete-quantity-link,
+.update-quantity-link,
+.save-quantity {
+  color: var(--white) !important;
+  padding: 5px;
+  border-radius: 20px;
+  transition: background 0.3s ease-in-out;
+}
+.update-quantity-link,
+.save-quantity {
+  background-color: var(--green-border);
+  margin-left: 10px !important;
+}
+.update-quantity-link:hover,
+.save-quantity:hover {
+  background-color: var(--green);
+}
+.delete-quantity-link {
+  background-color: rgb(250, 94, 94);
+}
+.delete-quantity-link:hover {
+  background-color: rgb(255, 45, 45);
 }
 .quantity-input,
 .save-quantity {
   display: none;
+}
+.quantity-input {
   width: 30px;
+  text-align: center;
+  padding-inline: 4px;
+  padding-block: 6px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid var(--green-border);
+  color: var(--green-border);
+}
+.quantity-input:focus {
+  outline: none;
+  box-shadow: 1px 1px 5px var(--green-border);
 }
 .isEditig-quantity .quantity-input,
 .isEditig-quantity .save-quantity {

@@ -1,0 +1,31 @@
+.noResult {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 10px;
+  padding-block: 30px;
+  border: 1px solid rgb(1, 147, 0, 0.3);
+  border-radius: 20px;
+}
+
+.message {
+  white-space: pre-line;
+  font-size: 20px;
+  color: var(--black);
+}
+
+.redirect {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--green);
+}
+.arrow {
+  transform: rotate(180deg);
+  width: 1.3em;
+  height: 1.3em;
+}

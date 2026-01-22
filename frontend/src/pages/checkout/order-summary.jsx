@@ -10,8 +10,10 @@ export default ({ cart, deliveryOptions, onUpdate }) => {
 
   const handleUpdateClick = (productId, currentQuantity) => {
     setEditingQuantity(productId);
-    setQuantityInputs(
-      { ...quantityInputs, [productId]: currentQuantity.toString() });
+    setQuantityInputs({
+      ...quantityInputs,
+      [productId]: currentQuantity.toString(),
+    });
   };
 
   const handleSaveQuantity = async (productId) => {
@@ -55,9 +57,10 @@ export default ({ cart, deliveryOptions, onUpdate }) => {
             >
               <div className="delivery-date">
                 Delivery date:{' '}
-                {selectedDeliveryOption && dayjs(selectedDeliveryOption.estimatedDeliveryTimeMs).format(
-                  'dddd, MMMM D'
-                )}
+                {selectedDeliveryOption &&
+                  dayjs(selectedDeliveryOption.estimatedDeliveryTimeMs).format(
+                    'dddd, MMMM D'
+                  )}
               </div>
 
               <div className="cart-item-details-grid">
@@ -69,16 +72,20 @@ export default ({ cart, deliveryOptions, onUpdate }) => {
                     {formatMoney(cartItem.product.priceCents)}
                   </div>
                   <div className="product-quantity">
-                    <span>
-                      Quantity:{' '}
-                      <span className={`quantity-label quantity-label-${cartItem.productId}`}>
+                    <span className="qunt-ct">
+                      <div className="qunt"> Quantity:&nbsp; </div>
+                      <span
+                        className={`quantity-label quantity-label-${cartItem.productId}`}
+                      >
                         {cartItem.quantity}
                       </span>
                     </span>
                     <span
                       className="update-quantity-link link-primary js-update-quantity"
                       data-product-id={cartItem.productId}
-                      onClick={() => handleUpdateClick(cartItem.productId, cartItem.quantity)}
+                      onClick={() =>
+                        handleUpdateClick(cartItem.productId, cartItem.quantity)
+                      }
                     >
                       Update
                     </span>
@@ -86,7 +93,12 @@ export default ({ cart, deliveryOptions, onUpdate }) => {
                       className="quantity-input"
                       type="text"
                       value={quantityInputs[cartItem.productId] || ''}
-                      onChange={(e) => setQuantityInputs({ ...quantityInputs, [cartItem.productId]: e.target.value })}
+                      onChange={(e) =>
+                        setQuantityInputs({
+                          ...quantityInputs,
+                          [cartItem.productId]: e.target.value,
+                        })
+                      }
                       onKeyDown={(e) => handleKeyDown(e, cartItem.productId)}
                       style={{ display: isEditing ? 'inline' : 'none' }}
                     />
@@ -103,7 +115,7 @@ export default ({ cart, deliveryOptions, onUpdate }) => {
                       data-product-id={cartItem.productId}
                       onClick={() => handleDelete(cartItem.productId)}
                     >
-                      Delete
+                      Remove
                     </span>
                   </div>
                 </div>

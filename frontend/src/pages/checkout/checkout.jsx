@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
 import './checkout-header.css';
 import './checkout-main.css';
 import OrderSummary from './order-summary.jsx';
 import PaymentSummary from './PaymentSummary.jsx';
-
 export default ({ cart, loadCart }) => {
   const navigate = useNavigate();
   let totalQuantity = 0;
-
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
   });
@@ -41,20 +40,19 @@ export default ({ cart, loadCart }) => {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <Link to="/">
-              <img className="amazon-logo" src="images/amazon-logo.png" />
+              <img className="amazon-logo" src="images/4ya-logo-black.png" />
               <img
                 className="amazon-mobile-logo"
-                src="images/amazon-mobile-logo.png"
+                src="images/4ya-logo-mobile-black.png"
               />
             </Link>
           </div>
 
           <div className="checkout-header-middle-section">
-            Checkout (
+            Checkout
             <Link className="return-to-home-link items-quantity" to="/">
               {totalQuantity}
             </Link>
-            )
           </div>
 
           <div className="checkout-header-right-section">
@@ -66,25 +64,35 @@ export default ({ cart, loadCart }) => {
       <div className="main">
         <div className="page-title">Review your order</div>
 
-        <div className="checkout-grid">
-          <OrderSummary
-            cart={cart}
-            deliveryOptions={deliveryOptions}
-            onUpdate={refreshData}
+        {cart.length != 0 ? (
+          <div className="checkout-grid">
+            <OrderSummary
+              cart={cart}
+              deliveryOptions={deliveryOptions}
+              onUpdate={refreshData}
+            />
+            <PaymentSummary
+              paymentSummary={paymentSummary}
+              onPlaceOrder={async () => {
+                try {
+                  await axios.post('/api/orders');
+                  navigate('/orders');
+                  loadCart();
+                } catch (error) {
+                  console.log('Something went wrong. Please try again later.');
+                }
+              }}
+            />
+          </div>
+        ) : (
+          <EmptyContainer
+            message={
+              'Your cart is empty 🛒 \n Looks like you haven’t added anything yet.'
+            }
+            link={'/'}
+            redirectMessage={'Start shopping'}
           />
-          <PaymentSummary
-            paymentSummary={paymentSummary}
-            onPlaceOrder={async () => {
-              try {
-                await axios.post('/api/orders');
-                navigate('/orders');
-                loadCart();
-              } catch (error) {
-                console.log('Something went wrong. Please try again later.');
-              }
-            }}
-          />
-        </div>
+        )}
       </div>
     </>
   );

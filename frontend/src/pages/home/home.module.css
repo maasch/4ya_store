@@ -131,13 +131,14 @@ h2 {
   justify-content: center;
 }
 .productQuantityContainer select {
-  width: 75%;
+  width: 50%;
   text-align: center;
   font-size: var(--fs-d);
   font-weight: 600;
   border: 2px solid var(--green);
   color: var(--green);
   border-radius: 20px;
+  background-color: rgb(1, 147, 0, 0.3);
 }
 .productQuantityContainer select:focus {
   outline: 1px solid var(--green);

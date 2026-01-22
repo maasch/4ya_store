@@ -61,8 +61,8 @@ export default ({ cart }) => {
           autoFocus={isSearchMode}
         />
 
-        <button 
-          className="search-button js-search-btn" 
+        <button
+          className="search-button js-search-btn"
           onClick={isSearchMode ? (searchTerm.trim() ? handleSearch : toggleSearchMode) : toggleSearchMode}
         >
           <svg
@@ -81,7 +81,7 @@ export default ({ cart }) => {
 
       <div className={`amazon-header-right-section ${isSearchMode ? 'search-mode-right' : ''}`}>
         {userInfo.isUser ? (
-          <Link className={`account-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`} to="/account">
+          <Link className={`account-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`} >
             <div className="userInfo">
               <p className="name">{userInfo.name}</p>
             </div>

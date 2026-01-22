@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import Header from '../../components/header.jsx';
+import Header from '../../components/header/header.jsx';
 import styles from './home.module.css';
 import ProductsGrid from './products-grid.jsx';
 

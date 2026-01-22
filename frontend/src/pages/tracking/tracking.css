@@ -1,38 +1,54 @@
+:root {
+  --fs-h1: 18px;
+  --fs-h2: 16px;
+  --fs-pt: 25px;
+  --fs-dt: 20px;
+  --fs-btn: 15px;
+  --prd-img-width: 170px;
+}
 .main {
-  max-width: 850px;
   margin-top: 90px;
   margin-bottom: 100px;
   padding-left: 30px;
   padding-right: 30px;
-
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
   margin-left: auto;
   margin-right: auto;
 }
 
 .back-to-orders-link {
-  display: inline-block;
-  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  font-size: var(--fs-h1);
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--green) !important;
+  margin-bottom: var(--fs-dt);
 }
 
-.delivery-date {
-  font-size: 25px;
+.delivery-date-trk {
+  font-size: var(--fs-pt);
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: var(--fs-dt);
 }
 
+.product-cont {
+  display: flex;
+  margin-bottom: var(--fs-dt);
+  border: 1px solid rgb(1, 147, 0, 0.3);
+  border-radius: 20px;
+  gap: 20px;
+}
 .product-info {
-  margin-bottom: 3px;
+  font-size: var(--fs-h1);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-block: 20px;
 }
-
-.product-image {
-  max-width: 150px;
-  max-height: 150px;
-  margin-top: 25px;
-  margin-bottom: 50px;
+.product-image-trk {
+  border-radius: 20px;
+  max-width: var(--prd-img-width);
 }
 
 .progress-labels-container {
@@ -40,41 +56,35 @@
   justify-content: space-between;
   font-size: 20px;
   font-weight: 500;
-  margin-bottom: 15px;
+  margin-bottom: var(--fs-dt);
+}
+.progress-label {
+  color: var(--black);
 }
 
 .current-status {
-  color: rgb(6, 125, 98);
-}
-
-@media (max-width: 575px) {
-  .progress-labels-container {
-    font-size: 16px;
-  }
+  color: var(--green);
 }
 
 @media (max-width: 450px) {
-  .progress-labels-container {
-    flex-direction: column;
-    margin-bottom: 5px;
-  }
-
-  .progress-label {
-    margin-bottom: 3px;
+  :root {
+    --fs-h1: 16px;
+    --fs-h2: 14px;
+    --fs-pt: 23px;
+    --fs-dt: 18px;
   }
 }
 
 .progress-bar-container {
   height: 25px;
   width: 100%;
-
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid rgb(1, 147, 0, 0.3);
   border-radius: 50px;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
-  background-color: green;
+  background-color: var(--green);
   border-radius: 50px;
 }
