@@ -2,6 +2,8 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
+import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
+import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
 import './tracking.css';
 
@@ -37,8 +39,18 @@ export default ({ cart }) => {
         <title>Tracking</title>
         <Header cart={cart} />
         <div className="main">
-          <div className="order-tracking">Loading...</div>
+          <div className="order-tracking">
+            <div className="delivery-date-trk">
+              Track Your Package
+            </div>
+            <EmptyContainer
+              message="Order not found. Please check your order ID and try again."
+              link="/orders"
+              redirectMessage="View Your Orders"
+            />
+          </div>
         </div>
+        <Footer />
       </>
     );
   }
@@ -127,6 +139,7 @@ export default ({ cart }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
+import Footer from '../../components/footer/footer.jsx';
 import './checkout-header.css';
 import './checkout-main.css';
 import OrderSummary from './order-summary.jsx';
@@ -74,13 +75,9 @@ export default ({ cart, loadCart }) => {
             <PaymentSummary
               paymentSummary={paymentSummary}
               onPlaceOrder={async () => {
-                try {
-                  await axios.post('/api/orders');
-                  navigate('/orders');
-                  loadCart();
-                } catch (error) {
-                  console.log('Something went wrong. Please try again later.');
-                }
+                await axios.post('/api/orders');
+                navigate('/orders');
+                loadCart();
               }}
             />
           </div>
@@ -94,6 +91,7 @@ export default ({ cart, loadCart }) => {
           />
         )}
       </div>
+      <Footer />
     </>
   );
 };

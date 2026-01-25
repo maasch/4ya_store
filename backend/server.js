@@ -1,23 +1,29 @@
-import express from 'express';
+import SequelizeStore from 'connect-session-sequelize';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import express from 'express';
+import session from 'express-session';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { sequelize } from './models/index.js';
-import productRoutes from './routes/products.js';
-import deliveryOptionRoutes from './routes/deliveryOptions.js';
-import cartItemRoutes from './routes/cartItems.js';
-import orderRoutes from './routes/orders.js';
-import resetRoutes from './routes/reset.js';
-import paymentSummaryRoutes from './routes/paymentSummary.js';
-import { Product } from './models/Product.js';
-import { DeliveryOption } from './models/DeliveryOption.js';
-import { CartItem } from './models/CartItem.js';
-import { Order } from './models/Order.js';
-import { defaultProducts } from './defaultData/defaultProducts.js';
-import { defaultDeliveryOptions } from './defaultData/defaultDeliveryOptions.js';
 import { defaultCart } from './defaultData/defaultCart.js';
+import { defaultDeliveryOptions } from './defaultData/defaultDeliveryOptions.js';
 import { defaultOrders } from './defaultData/defaultOrders.js';
-import fs from 'fs';
+import { defaultProducts } from './defaultData/defaultProducts.js';
+import { CartItem } from './models/CartItem.js';
+import { DeliveryOption } from './models/DeliveryOption.js';
+import { Order } from './models/Order.js';
+import { Product } from './models/Product.js';
+import { sequelize } from './models/index.js';
+import { User } from './models/user.js';
+import cartItemRoutes from './routes/cartItems.js';
+import deliveryOptionRoutes from './routes/deliveryOptions.js';
+import login from './routes/login.js';
+import orderRoutes from './routes/orders.js';
+import paymentSummaryRoutes from './routes/paymentSummary.js';
+import productRoutes from './routes/products.js';
+import register from './routes/register.js';
+import resetRoutes from './routes/reset.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,7 +32,28 @@ const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
+
+// Configure sessions
+const SessionStore = SequelizeStore(session.Store);
+const sessionStore = new SessionStore({
+  db: sequelize,
+});
+
+app.use(
+  session({
+    secret: 'adelex',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
 
 // Serve images from the images folder
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -38,6 +65,8 @@ app.use('/api/cart-items', cartItemRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/reset', resetRoutes);
 app.use('/api/payment-summary', paymentSummaryRoutes);
+app.use('/api/users', register);
+app.use('/api/login', login);
 
 // Serve static files from the dist folder
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -70,32 +99,34 @@ if (productCount === 0) {
   const productsWithTimestamps = defaultProducts.map((product, index) => ({
     ...product,
     createdAt: new Date(timestamp + index),
-    updatedAt: new Date(timestamp + index)
+    updatedAt: new Date(timestamp + index),
   }));
 
-  const deliveryOptionsWithTimestamps = defaultDeliveryOptions.map((option, index) => ({
-    ...option,
-    createdAt: new Date(timestamp + index),
-    updatedAt: new Date(timestamp + index)
-  }));
+  const deliveryOptionsWithTimestamps = defaultDeliveryOptions.map(
+    (option, index) => ({
+      ...option,
+      createdAt: new Date(timestamp + index),
+      updatedAt: new Date(timestamp + index),
+    })
+  );
 
   const cartItemsWithTimestamps = defaultCart.map((item, index) => ({
     ...item,
     createdAt: new Date(timestamp + index),
-    updatedAt: new Date(timestamp + index)
+    updatedAt: new Date(timestamp + index),
   }));
 
   const ordersWithTimestamps = defaultOrders.map((order, index) => ({
     ...order,
     createdAt: new Date(timestamp + index),
-    updatedAt: new Date(timestamp + index)
+    updatedAt: new Date(timestamp + index),
   }));
 
   await Product.bulkCreate(productsWithTimestamps);
   await DeliveryOption.bulkCreate(deliveryOptionsWithTimestamps);
   await CartItem.bulkCreate(cartItemsWithTimestamps);
   await Order.bulkCreate(ordersWithTimestamps);
-
+  await User.bulkCreate();
   console.log('Default data added to the database.');
 }
 

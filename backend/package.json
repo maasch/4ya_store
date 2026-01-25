@@ -15,8 +15,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-session-sequelize": "^8.0.5",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "express-session": "^1.19.0",
     "mysql2": "^3.14.1",
     "patch-package": "8.0.0",
     "pg": "^8.16.0",

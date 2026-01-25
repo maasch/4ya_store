@@ -1,0 +1,133 @@
+.userProfile {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(1, 147, 0, 0.15);
+  border: 1px solid rgb(1, 147, 0, 0.3);
+  min-width: 240px;
+  z-index: 1001;
+  overflow: hidden;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-header {
+  padding: 16px;
+  background-color: var(--white);
+}
+
+.pf-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black);
+  margin: 0 0 4px 0;
+}
+
+.pf-email {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  word-break: break-word;
+}
+
+.profile-divider {
+  height: 1px;
+  background-color: rgba(1, 147, 0, 0.3);
+  margin: 0;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: var(--black);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.profile-link:hover {
+  background-color: rgba(1, 147, 0, 0.3);
+}
+
+.profile-icon {
+  font-size: 18px;
+  display: inline-block;
+  width: 24px;
+  text-align: center;
+}
+
+.profile-logout {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  color: var(--black);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: inherit;
+}
+
+.profile-logout:hover {
+  background-color: rgba(147, 1, 0, 0.4);
+}
+
+.userProfile:has(.profile-logout:hover) {
+  border-color: rgba(147, 1, 0, 0.4);
+}
+
+.userProfile:has(.profile-logout:hover) .profile-divider {
+  background-color: rgba(147, 1, 0, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 800px) {
+  .userProfile {
+    right: 10px;
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 640px) {
+  .userProfile {
+    right: 5px;
+    min-width: 200px;
+  }
+
+  .pf-name {
+    font-size: 14px;
+  }
+
+  .pf-email {
+    font-size: 12px;
+  }
+
+  .profile-link,
+  .profile-logout {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+}

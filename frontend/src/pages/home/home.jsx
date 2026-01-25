@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
+import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
+import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
 import styles from './home.module.css';
 import ProductsGrid from './products-grid.jsx';
@@ -36,8 +38,16 @@ export default ({ cart, loadCart }) => {
       <Header cart={cart} />
       <div className={styles.homeMain}>
         <h2>Trending Now</h2>
-        <ProductsGrid products={products} loadCart={loadCart} />
+        {products.length <= 0 ?
+          <EmptyContainer
+            message={'No results found \n  Try checking your spelling or using different keywords.'}
+            link={'/'}
+            redirectMessage={'Browse all products'}
+          />
+          : <ProductsGrid products={products} loadCart={loadCart} />
+        }
       </div>
+      <Footer />
     </>
   );
 };

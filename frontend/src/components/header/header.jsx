@@ -1,15 +1,37 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import Profile from '../profile/profile';
 import './header.css';
-
 export default ({ cart }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchMode, setIsSearchMode] = useState(false);
-  let userInfo = {
-    isUser: false,
-    name: 'Adel maach',
-  };
+  const [userInfo, setUserInfo] = useState({
+    isAuthenticated: false,
+    user: {}
+  })
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  async function fetchUserInfo() {
+    try {
+      await axios.get('/api/login/check').then(response => {
+        if (response.data.isAuthenticated) {
+          setUserInfo(response.data)
+        }
+      })
+
+    } catch (err) {
+      throw err
+    }
+  }
+  useEffect(() => {
+    async function avoid() {
+      await fetchUserInfo();
+    }
+    avoid()
+  }, [])
+
   let totalQuantity = 0;
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
@@ -20,6 +42,7 @@ export default ({ cart }) => {
       navigate(`/?search_query=${encodeURIComponent(searchTerm.trim())}`);
       setIsSearchMode(false);
     }
+
   };
 
   const handleKeyDown = (event) => {
@@ -36,6 +59,14 @@ export default ({ cart }) => {
     if (!isSearchMode) {
       setSearchTerm('');
     }
+  };
+
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  const closeProfile = () => {
+    setIsProfileOpen(false);
   };
 
   return (
@@ -80,29 +111,41 @@ export default ({ cart }) => {
       </div>
 
       <div className={`amazon-header-right-section ${isSearchMode ? 'search-mode-right' : ''}`}>
-        {userInfo.isUser ? (
-          <Link className={`account-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`} >
-            <div className="userInfo">
-              <p className="name">{userInfo.name}</p>
-            </div>
-
-            <svg
-              className="pfp-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+        {userInfo.isAuthenticated ? (
+          <div className="account-container">
+            <button 
+              className={`account-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`}
+              onClick={toggleProfile}
             >
-              <g
-                fill="none"
-                stroke="#fff"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.3"
+              <div className="userInfo">
+                <p className="name">{userInfo.user.name}</p>
+              </div>
+
+              <svg
+                className="pfp-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
               >
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2" />
-                <path d="M4.271 18.346S6.5 15.5 12 15.5s7.73 2.846 7.73 2.846M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
-              </g>
-            </svg>
-          </Link>
+                <g
+                  fill="none"
+                  stroke="#fff"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.3"
+                >
+                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2" />
+                  <path d="M4.271 18.346S6.5 15.5 12 15.5s7.73 2.846 7.73 2.846M12 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
+                </g>
+              </svg>
+
+            </button>
+            <Profile 
+              user={userInfo.user} 
+              update={setUserInfo} 
+              isOpen={isProfileOpen}
+              onClose={closeProfile}
+            />
+          </div>
         ) : (
           <Link className={`header-link not-auth ${isSearchMode ? 'hidden-mobile' : ''}`} to="/signin">
             <p className="signin"> Sign In</p>

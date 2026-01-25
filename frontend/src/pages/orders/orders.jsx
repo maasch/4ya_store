@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
+import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
 import formatMoney from '../../utils/money.js';
 import './orders.css';
@@ -59,9 +60,8 @@ export default ({ cart, loadCart }) => {
                     <div className="order-details-grid">
                       {order.products.map((orderProduct) => {
                         const matchProduct = orderProduct.product;
-
                         return (
-                          <div className='product-container'>
+                          <div key={orderProduct.productId} className='product-container'>
                             <div className="product-image-container">
                               <img src={matchProduct.image} />
                             </div>
@@ -120,6 +120,7 @@ export default ({ cart, loadCart }) => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -376,6 +376,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.account-container {
+  position: relative;
+}
+
 .account-link {
   display: flex;
   font-size: 15px;
@@ -383,6 +387,25 @@
   justify-content: center;
   color: var(--white);
   padding: 6px 8px;
+  background: none;
+  border: 1px solid transparent;
+  border-bottom: 2px solid var(--black);
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  height: 50px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.account-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid var(--white);
+}
+
+.account-link:active {
+  transform: scale(0.98);
 }
 
 .userInfo {
