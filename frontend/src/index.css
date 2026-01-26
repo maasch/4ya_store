@@ -6,9 +6,16 @@
   --light-black: rgb(27, 27, 27);
 }
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: Ubuntu, Arial;
   margin: 0;
+  padding: 0;
   color: var(--black);
 }
 p {

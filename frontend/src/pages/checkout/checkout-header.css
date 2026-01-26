@@ -12,6 +12,8 @@
   left: 0;
   right: 0;
   z-index: 1000;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .header-content {

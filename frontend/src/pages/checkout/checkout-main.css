@@ -13,6 +13,8 @@
   margin-bottom: 100px;
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .page-title {
@@ -34,6 +36,9 @@
 }
 
 @media (max-width: 768px) {
+  .delivery-options-grid {
+    width: 95% !important;
+  }
   .page-title {
     font-size: 20px !important;
   }
@@ -105,6 +110,9 @@
   }
 }
 @media (max-width: 430px) {
+  .delivery-options-grid {
+    width: 95% !important;
+  }
   .cart-item-details-grid {
     display: flex;
     flex-direction: column;
@@ -161,6 +169,7 @@
   border-radius: 20px;
   padding: 6px 10px;
   gap: 10px;
+  width: 200px;
 }
 
 @media (max-width: 1000px) {

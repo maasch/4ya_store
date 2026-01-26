@@ -1,8 +1,10 @@
 .footer {
+  width: 100%;
   background-color: var(--black);
   color: var(--white);
   margin-top: 60px;
   border-top: 2px solid rgba(1, 147, 0, 0.3);
+  box-sizing: border-box;
 }
 
 .footer-content {
@@ -89,9 +91,11 @@
 }
 
 .footer-bottom {
+  width: 100%;
   background-color: var(--light-black);
   border-top: 1px solid rgba(1, 147, 0, 0.2);
   padding: 25px 20px;
+  box-sizing: border-box;
 }
 
 .footer-bottom-content {
