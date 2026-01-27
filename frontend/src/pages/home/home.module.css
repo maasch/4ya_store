@@ -11,7 +11,6 @@ h2 {
   --fs-d: 18px;
   --fs-n: 16px;
 }
-
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -65,6 +64,16 @@ h2 {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.productContainer:hover {
+  transform: scale(1.025);
+}
+.productContainer:active {
+  transform: scale(1);
 }
 
 .productImageContainer {
@@ -82,6 +91,7 @@ h2 {
 }
 
 .productName {
+  color: var(--black);
   height: 40px;
   text-align: center;
   font-weight: 600;
@@ -119,6 +129,7 @@ h2 {
   color: var(--green) !important;
 }
 .productPrice {
+  color: var(--black);
   font-weight: 700;
   margin-bottom: 10px;
   text-align: center;

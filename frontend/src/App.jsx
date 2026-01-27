@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router';
 import CheckoutPage from './pages/checkout/checkout.jsx';
 import HomePage from './pages/home/home.jsx';
 import OrdersPage from './pages/orders/orders.jsx';
+import ProductPage from './pages/product/ProductPage.jsx';
 import SignInPage from './pages/signin/signin.jsx';
 import TrackingPage from './pages/tracking/tracking.jsx';
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route index element={<HomePage cart={cart} loadCart={loadCart} />} />
         <Route path="/checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} />} />
         <Route path="/orders" element={<OrdersPage cart={cart} loadCart={loadCart} />} />
+        <Route path="/product" element={<ProductPage cart={cart} loadCart={loadCart} />} />
         <Route path="/signin" element={<SignInPage cart={cart} />} />
         <Route path="/tracking" element={<TrackingPage cart={cart} />} />
       </Routes>

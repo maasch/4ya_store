@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import formatCurrency from '../../utils/money.js';
 import styles from './home.module.css';
 
@@ -7,8 +8,11 @@ export default ({ product, loadCart }) => {
   const [quantity, setQuantity] = useState(1);
   const [showAdded, setShowAdded] = useState(false);
   const timeoutRef = useRef(null);
+  const navigate = useNavigate();
 
-  const addToCart = async () => {
+  const addToCart = async (e) => {
+    e.preventDefault();      
+    e.stopPropagation();
     await axios.post('/api/cart-items', {
       productId: product.id,
       quantity,
@@ -30,12 +34,28 @@ export default ({ product, loadCart }) => {
   };
 
   const selectQuantity = (event) => {
-    const quantitySelected = Number(event.target.value);
-    setQuantity(quantitySelected);
+    setQuantity(Number(event.target.value));
+  };
+
+  const handleProductClick = (e) => {
+    // Only navigate if clicking on non-interactive elements
+    const target = e.target;
+    const isInteractiveElement = 
+      target.tagName === 'SELECT' ||
+      target.tagName === 'BUTTON' ||
+      target.closest('select') ||
+      target.closest('button');
+    
+    if (!isInteractiveElement) {
+      navigate(`/product?id=${product.id}`);
+    }
   };
 
   return (
-    <div className={styles.productContainer}>
+    <div 
+      className={styles.productContainer}
+      onClick={handleProductClick}
+    >
       <div className={styles.productImageContainer}>
         <img
           loading="lazy"

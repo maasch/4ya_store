@@ -28,4 +28,17 @@ router.get('/', async (req, res) => {
   res.json(products);
 });
 
+router.get('/:productId', async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
