@@ -90,7 +90,10 @@ app.use((err, req, res, next) => {
 /* eslint-enable no-unused-vars */
 
 // Sync database and load default data if none exist
-await sequelize.sync();
+// NOTE: `alter: true` can trigger table rebuilds that fail with FK constraints in SQLite.
+// Use `/api/reset` (force sync) or set `DB_SYNC_ALTER=true` when you explicitly want schema alteration.
+const shouldAlter = process.env.DB_SYNC_ALTER === 'true';
+await sequelize.sync(shouldAlter ? { alter: true } : undefined);
 
 const productCount = await Product.count();
 if (productCount === 0) {
