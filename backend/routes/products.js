@@ -1,5 +1,6 @@
 import express from 'express';
 import { Product } from '../models/Product.js';
+import { ProductView } from '../models/ProductView.js';
 
 const router = express.Router();
 
@@ -13,14 +14,15 @@ router.get('/', async (req, res) => {
     // Filter products by case-insensitive search on name or keywords
     const lowerCaseSearch = search.toLowerCase();
 
-    products = products.filter(product => {
+    products = products.filter((product) => {
       const nameMatch = product.name.toLowerCase().includes(lowerCaseSearch);
 
-      const keywordsMatch = product.keywords.some(keyword => keyword.toLowerCase().includes(lowerCaseSearch));
+      const keywordsMatch = product.keywords.some((keyword) =>
+        keyword.toLowerCase().includes(lowerCaseSearch)
+      );
 
       return nameMatch || keywordsMatch;
     });
-
   } else {
     products = await Product.findAll();
   }
@@ -30,11 +32,16 @@ router.get('/', async (req, res) => {
 
 router.get('/:productId', async (req, res) => {
   const { productId } = req.params;
+  const userId = req.session.userId || null;
   try {
     const product = await Product.findByPk(productId);
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
+    ProductView.create({
+      userId,
+      productId,
+    });
     res.json(product);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });

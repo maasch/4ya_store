@@ -14,6 +14,7 @@ import { CartItem } from './models/CartItem.js';
 import { DeliveryOption } from './models/DeliveryOption.js';
 import { Order } from './models/Order.js';
 import { Product } from './models/Product.js';
+import { ProductView } from './models/ProductView.js';
 import { sequelize } from './models/index.js';
 import { User } from './models/user.js';
 import cartItemRoutes from './routes/cartItems.js';
@@ -130,6 +131,7 @@ if (productCount === 0) {
   await CartItem.bulkCreate(cartItemsWithTimestamps);
   await Order.bulkCreate(ordersWithTimestamps);
   await User.bulkCreate();
+  await ProductView.bulkCreate();
   console.log('Default data added to the database.');
 }
 

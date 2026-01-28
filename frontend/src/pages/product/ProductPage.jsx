@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams, Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
 import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
@@ -10,14 +10,14 @@ import styles from './product.module.css';
 export default ({ cart, loadCart }) => {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
-  
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showAdded, setShowAdded] = useState(false);
   const timeoutRef = useRef(null);
-
+  const hasLoggedView = useRef(false);
   // Scroll to top when entering the page or when productId changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,6 +43,9 @@ export default ({ cart, loadCart }) => {
       setLoading(false);
       return;
     }
+
+    if (hasLoggedView.current) return;
+    hasLoggedView.current = true;
 
     async function fetchProduct() {
       try {
@@ -242,23 +245,23 @@ export default ({ cart, loadCart }) => {
                   onClick={addToCart}
                   disabled={product.stock === 0 || showAdded}
                 >
-                   <svg
-                        className={styles.addToCartIcon}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill="#fff"
-                          d="M2.5 2a.5.5 0 0 0 0 1h.246a.5.5 0 0 1 .48.363l1.586 5.55A1.5 1.5 0 0 0 6.254 10h4.569a1.5 1.5 0 0 0 1.393-.943l1.474-3.686A1 1 0 0 0 12.762 4H4.448l-.261-.912A1.5 1.5 0 0 0 2.746 2zm4 12a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m4 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3"
-                        />
-                      </svg>
+                  <svg
+                    className={styles.addToCartIcon}
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill="#fff"
+                      d="M2.5 2a.5.5 0 0 0 0 1h.246a.5.5 0 0 1 .48.363l1.586 5.55A1.5 1.5 0 0 0 6.254 10h4.569a1.5 1.5 0 0 0 1.393-.943l1.474-3.686A1 1 0 0 0 12.762 4H4.448l-.261-.912A1.5 1.5 0 0 0 2.746 2zm4 12a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m4 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3"
+                    />
+                  </svg>
                   {showAdded ? (
                     <>
                       Added to Cart
                     </>
                   ) : (
                     <>
-                     
+
                       Add to Cart
                     </>
                   )}
