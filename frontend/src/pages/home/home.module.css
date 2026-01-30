@@ -6,6 +6,11 @@ h2 {
   margin: 0;
   margin-bottom: 10px;
 }
+.loading {
+  margin: 20px 0;
+  color: var(--green, #009300);
+  font-weight: 600;
+}
 
 :root {
   --fs-d: 18px;

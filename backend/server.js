@@ -23,11 +23,12 @@ import login from './routes/login.js';
 import orderRoutes from './routes/orders.js';
 import paymentSummaryRoutes from './routes/paymentSummary.js';
 import productRoutes from './routes/products.js';
+import recommendationRoutes from './routes/recommendations.js';
 import register from './routes/register.js';
 import resetRoutes from './routes/reset.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -61,6 +62,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Use routes
 app.use('/api/products', productRoutes);
+app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/delivery-options', deliveryOptionRoutes);
 app.use('/api/cart-items', cartItemRoutes);
 app.use('/api/orders', orderRoutes);
