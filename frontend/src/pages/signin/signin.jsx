@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
 import './signin.css';
-export default ({ cart }) => {
+export default ({ cart, userInfo, setUserInfo }) => {
   const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
@@ -101,6 +101,11 @@ export default ({ cart }) => {
           email: formData.email,
           password: formData.password,
         });
+        // Fetch user info after successful login
+        const response = await axios.get('/api/login/check');
+        if (response.data.isAuthenticated) {
+          setUserInfo(response.data);
+        }
         // Redirect to home page after successful login
         navigate('/');
       }
@@ -134,7 +139,7 @@ export default ({ cart }) => {
 
   return (
     <>
-      <Header cart={cart} />
+      <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
       <div ref={signinlink} className="signin-container">
         <div className="signin-card">
           <div className="signin-header">
@@ -241,7 +246,7 @@ export default ({ cart }) => {
                   <input type="checkbox" className="checkbox-input" />
                   <span>Keep me signed in</span>
                 </label>
-                <Link to="/forgot-password" className="forgot-password-link">
+                <Link className="forgot-password-link">
                   Forgot password?
                 </Link>
               </div>

@@ -13,20 +13,27 @@ function App() {
     let response = await axios.get('/api/cart-items?expand=product');
     setCart(response.data);
   }
+  const [userInfo, setUserInfo] = useState({
+    isAuthenticated: false,
+    user: {}
+  });
   useEffect(() => {
     loadCart();
+    fetchUserInfo();
   }, []);
+  async function fetchUserInfo() {
+    let response = await axios.get('/api/login/check');
+    setUserInfo(response.data);
+  }
   return (
-    <>
       <Routes>
-        <Route index element={<HomePage cart={cart} loadCart={loadCart} />} />
-        <Route path="/checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} />} />
-        <Route path="/orders" element={<OrdersPage cart={cart} loadCart={loadCart} />} />
-        <Route path="/product" element={<ProductPage cart={cart} loadCart={loadCart} />} />
-        <Route path="/signin" element={<SignInPage cart={cart} />} />
-        <Route path="/tracking" element={<TrackingPage cart={cart} />} />
-      </Routes>
-    </>
+        <Route index element={<HomePage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+        <Route path="/checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+        <Route path="/orders" element={<OrdersPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+        <Route path="/product" element={<ProductPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+        <Route path="/signin" element={<SignInPage cart={cart}  userInfo={userInfo} setUserInfo={setUserInfo} />} />
+        <Route path="/tracking" element={<TrackingPage cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />} />  
+    </Routes>
   );
 }
 

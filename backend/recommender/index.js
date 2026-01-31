@@ -5,10 +5,10 @@
  * - Logged-in with context: content-based + collaborative → hybrid merge → top N
  */
 
-import { applyBusinessRules } from './rules.js';
-import { scoreByContent } from './contentBased.js';
 import { scoreByBehavior } from './collaborative.js';
+import { scoreByContent } from './contentBased.js';
 import { scoreByPopularity } from './popularity.js';
+import { applyBusinessRules } from './rules.js';
 import { mergeAndRank, topN } from './utils.js';
 
 const DEFAULT_LIMIT = 10;
@@ -77,9 +77,9 @@ function getRecommendations({
   return top.map(({ product }) => product);
 }
 
-export { getRecommendations };
-export { applyBusinessRules } from './rules.js';
-export { scoreByContent } from './contentBased.js';
 export { scoreByBehavior } from './collaborative.js';
-export { scoreByPopularity, orderCountsByProduct } from './popularity.js';
+export { scoreByContent } from './contentBased.js';
+export { orderCountsByProduct, scoreByPopularity } from './popularity.js';
+export { applyBusinessRules } from './rules.js';
 export { mergeAndRank, normalizeMinMax, topN } from './utils.js';
+export { getRecommendations };

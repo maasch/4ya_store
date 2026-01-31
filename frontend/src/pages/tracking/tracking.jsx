@@ -7,7 +7,7 @@ import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
 import './tracking.css';
 
-export default ({ cart }) => {
+export default ({ cart, userInfo, setUserInfo }) => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get('orderId');
   const productId = searchParams.get('productId');
@@ -37,7 +37,7 @@ export default ({ cart }) => {
     return (
       <>
         <title>Tracking</title>
-        <Header cart={cart} />
+        <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
         <div className="main">
           <div className="order-tracking">
             <div className="delivery-date-trk">
@@ -84,7 +84,7 @@ export default ({ cart }) => {
   return (
     <>
       <title>Tracking</title>
-      <Header cart={cart} />
+      <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className="main">
         <div className="order-tracking">
           <Link className="back-to-orders-link" to="/orders">

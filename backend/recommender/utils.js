@@ -26,9 +26,9 @@ function normalizeMinMax(values) {
   if (!Array.isArray(values) || values.length === 0) return [];
   const min = Math.min(...values);
   const max = Math.max(...values);
-  const span = max - min;
-  if (span === 0) return values.map(() => 0.5);
-  return values.map((v) => (v - min) / span);
+  const gap = max - min;
+  if (gap === 0) return values.map(() => 0.5);
+  return values.map((v) => (v - min) / gap);
 }
 
 /**
@@ -41,17 +41,24 @@ function normalizeMinMax(values) {
  * @param {number} collaborativeWeight - Weight for collaborative score (e.g. 0.5)
  * @returns {Array<{ product: object, score: number }>} Sorted by combined score, descending
  */
-function mergeAndRank(contentScored, collabScored, contentWeight, collaborativeWeight) {
+function mergeAndRank(
+  contentScored,
+  collabScored,
+  contentWeight,
+  collaborativeWeight
+) {
   const byId = new Map();
 
   for (const { product, score } of contentScored) {
     const id = String(product.id);
-    if (!byId.has(id)) byId.set(id, { product, contentScore: 0, collabScore: 0 });
+    if (!byId.has(id))
+      byId.set(id, { product, contentScore: 0, collabScore: 0 });
     byId.get(id).contentScore = score;
   }
   for (const { product, score } of collabScored) {
     const id = String(product.id);
-    if (!byId.has(id)) byId.set(id, { product, contentScore: 0, collabScore: 0 });
+    if (!byId.has(id))
+      byId.set(id, { product, contentScore: 0, collabScore: 0 });
     byId.get(id).collabScore = score;
   }
 
@@ -69,4 +76,4 @@ function mergeAndRank(contentScored, collabScored, contentWeight, collaborativeW
   return merged;
 }
 
-export { topN, normalizeMinMax, mergeAndRank };
+export { mergeAndRank, normalizeMinMax, topN };

@@ -7,7 +7,7 @@ import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
 import formatMoney from '../../utils/money.js';
 import './orders.css';
-export default ({ cart, loadCart }) => {
+export default ({ cart, loadCart, userInfo, setUserInfo }) => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default ({ cart, loadCart }) => {
   return (
     <>
       <title>Orders</title>
-      <Header cart={cart} />
+      <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className="main">
         <div className="orders-page">
           <div className="page-title">Your Orders</div>

@@ -1,36 +1,12 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Profile from '../profile/profile';
 import './header.css';
-export default ({ cart }) => {
+export default ({ cart, userInfo, setUserInfo }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [isSearchMode, setIsSearchMode] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    isAuthenticated: false,
-    user: {}
-  })
+  const [isSearchMode, setIsSearchMode] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  async function fetchUserInfo() {
-    try {
-      await axios.get('/api/login/check').then(response => {
-        if (response.data.isAuthenticated) {
-          setUserInfo(response.data)
-        }
-      })
-
-    } catch (err) {
-      throw err
-    }
-  }
-  useEffect(() => {
-    async function avoid() {
-      await fetchUserInfo();
-    }
-    avoid()
-  }, [])
 
   let totalQuantity = 0;
   cart.forEach((cartItem) => {
@@ -113,7 +89,7 @@ export default ({ cart }) => {
       <div className={`amazon-header-right-section ${isSearchMode ? 'search-mode-right' : ''}`}>
         {userInfo.isAuthenticated ? (
           <div className="account-container">
-            <button 
+            <button
               className={`account-link header-link ${isSearchMode ? 'hidden-mobile' : ''}`}
               onClick={toggleProfile}
             >
@@ -139,9 +115,9 @@ export default ({ cart }) => {
               </svg>
 
             </button>
-            <Profile 
-              user={userInfo.user} 
-              update={setUserInfo} 
+            <Profile
+              user={userInfo.user}
+              update={setUserInfo}
               isOpen={isProfileOpen}
               onClose={closeProfile}
             />

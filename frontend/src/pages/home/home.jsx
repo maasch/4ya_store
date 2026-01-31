@@ -9,7 +9,7 @@ import ProductsGrid from './products-grid.jsx';
 
 const RECOMMENDATIONS_LIMIT = 24;
 
-export default ({ cart, loadCart }) => {
+export default ({ cart, loadCart, userInfo, setUserInfo }) => {
   const [searchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,13 +47,13 @@ export default ({ cart, loadCart }) => {
         })
         .catch(() => {
           axios.get('/api/products').then((res) => {
-            setProducts(res.data.slice(0, RECOMMENDATIONS_LIMIT));
+            setProducts(res.data);
             setColdStart(true);
             setLoading(false);
           }).catch(() => setLoading(false));
         });
     }
-  }, [searchQuery]);
+  }, [searchQuery, userInfo.isAuthenticated]);
 
   const sectionTitle = searchQuery
     ? 'Search results'
@@ -64,7 +64,7 @@ export default ({ cart, loadCart }) => {
   return (
     <>
       <title>4YA Store</title>
-      <Header cart={cart} />
+      <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className={styles.homeMain}>
         <h2>{sectionTitle}</h2>
         {loading ? (

@@ -7,7 +7,7 @@ import Header from '../../components/header/header.jsx';
 import formatCurrency from '../../utils/money.js';
 import styles from './product.module.css';
 
-export default ({ cart, loadCart }) => {
+export default ({ cart, loadCart, userInfo, setUserInfo }) => {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('id');
 
@@ -119,7 +119,7 @@ export default ({ cart, loadCart }) => {
   if (loading) {
     return (
       <>
-        <Header cart={cart} />
+        <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
         <div className="main">
           <div className={styles.productPage}>
             <div className={styles.loadingContainer}>
@@ -136,7 +136,7 @@ export default ({ cart, loadCart }) => {
     return (
       <>
         <title>Product Not Found</title>
-        <Header cart={cart} />
+        <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
         <div className="main">
           <div className={styles.productPage}>
             <EmptyContainer
@@ -156,7 +156,7 @@ export default ({ cart, loadCart }) => {
 
   return (
     <>
-      <Header cart={cart} />
+      <Header cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />
       <div className="main">
         <div className={styles.productPage}>
           {/* Breadcrumb */}
