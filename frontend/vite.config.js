@@ -13,8 +13,8 @@ export default defineConfig({
   server: {
     port: 5000,
     proxy: {
-      '/api': 'http://localhost:3001',
-      '/images': 'http://localhost:3001',
+      '/api': 'http://localhost:3691',
+      '/images/products': 'http://localhost:3691',
     },
   },
 });
