@@ -5,7 +5,7 @@ import './header.css';
 export default ({ cart, userInfo, setUserInfo }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [isSearchMode, setIsSearchMode] = useState(true);
+  const [isSearchMode, setIsSearchMode] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   let totalQuantity = 0;

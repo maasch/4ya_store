@@ -12,6 +12,7 @@ export default defineConfig({
   ],
   server: {
     port: 5000,
+    allowedHosts: ['stoutly-kneadable-florence.ngrok-free.dev'],
     proxy: {
       '/api': 'http://localhost:3691',
       '/images/products': 'http://localhost:3691',
