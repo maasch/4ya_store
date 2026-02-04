@@ -79,44 +79,15 @@
   word-break: break-word;
 }
 
-@media (max-width: 575px) {
-  .order-header {
-    flex-direction: column;
-    align-items: start;
-    line-height: 20px;
-    padding: 15px;
-  }
-
-  .order-header-left-section {
-    flex-direction: column;
-  }
-
-  .order-header-label {
-    margin-right: 5px;
-  }
-
-  .order-date,
-  .order-total {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    margin-right: 0;
-  }
-
-  .order-header-right-section {
-    display: grid;
-    grid-template-columns: auto 1fr;
-  }
-}
-
 .order-details-grid {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
   padding: 20px 25px;
   border: 1px solid rgb(1, 147, 0, 0.3);
   border-top: none;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
 }
 
 .product-container {
@@ -127,49 +98,6 @@
   border-radius: 20px;
   align-items: center;
 }
-
-@media (max-width: 800px) {
-  :root {
-    --fs-h1: 16px;
-    --fs-h2: 14px;
-    --fs-pt: 20px;
-    --fs-dt: 28px;
-    --fs-btn: 14px;
-  }
-  .order-details-grid {
-    grid-template-columns: 110px 1fr;
-    row-gap: 15px;
-    padding-bottom: 8px;
-  }
-  .order-header {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    padding: 10px 15px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .order-header-left-section {
-    width: 96%;
-    display: flex;
-    gap: 0px;
-  }
-  .order-date,
-  .order-total {
-    width: 90% !important;
-    margin-left: 10px;
-  }
-  .order-header-right-section {
-    width: 96%;
-  }
-
-  .main {
-    margin-top: 90px !important;
-  }
-}
-
 .product-image-container {
   display: flex;
   object-fit: contain;
@@ -228,8 +156,81 @@
   border-radius: 20px !important;
 }
 
-/* Small mobile (≤450px) – phones in portrait */
+@media (max-width: 800px) {
+  :root {
+    --fs-h1: 16px;
+    --fs-h2: 14px;
+    --fs-pt: 20px;
+    --fs-dt: 28px;
+    --fs-btn: 14px;
+  }
+  .order-details-grid {
+    grid-template-columns: 110px 1fr;
+    row-gap: 15px;
+    padding-bottom: 8px;
+  }
+  .order-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .order-header-left-section {
+    width: 96%;
+    display: flex;
+    gap: 0px;
+  }
+  .order-date,
+  .order-total {
+    width: 90% !important;
+    margin-left: 10px;
+  }
+  .order-header-right-section {
+    width: 96%;
+  }
+
+  .main {
+    margin-top: 90px !important;
+  }
+}
+@media (max-width: 575px) {
+  .order-header {
+    flex-direction: column;
+    align-items: start;
+    line-height: 20px;
+    padding: 15px;
+  }
+
+  .order-header-left-section {
+    flex-direction: column;
+  }
+
+  .order-header-label {
+    margin-right: 5px;
+  }
+
+  .order-date,
+  .order-total {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin-right: 0;
+  }
+
+  .order-header-right-section {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+}
 @media (max-width: 450px) {
+  .product-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   :root {
     --fs-h1: 16px;
     --fs-h2: 14px;
@@ -274,27 +275,6 @@
     margin-left: 0;
   }
 
-  .product-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    column-gap: 12px;
-    row-gap: 10px;
-  }
-
-  .product-image-container {
-    grid-row: 1;
-    align-self: start;
-  }
-
-  .product-image-container img {
-    width: auto;
-  }
-
-  .product-details {
-    grid-row: 1;
-    min-width: 0;
-  }
-
   .product-name {
     font-size: var(--fs-h1);
     line-height: 1.3;
@@ -305,34 +285,21 @@
     font-size: var(--fs-btn);
   }
 
-  .product-actions {
-    grid-row: 2;
-    margin-bottom: 7px;
-  }
-
   .buy-again-button {
     width: 100%;
-    height: 40px;
     font-size: var(--fs-btn);
   }
 
   .track-package-button {
     width: 100%;
-    min-width: 160px;
-    padding: 12px;
   }
 
   .product-actions {
-    grid-row: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 0 6px;
+    width: 50vw;
   }
 
   .product-details .buy-again-button {
     width: 100%;
-    margin-top: 8px;
   }
 
   .track-package-button {

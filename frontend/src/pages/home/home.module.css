@@ -61,6 +61,10 @@ h2 {
     --fs-d: 14px;
     --fs-n: 14px;
   }
+  .homeMain {
+    margin-top: 70px;
+    padding-inline: 15px;
+  }
 }
 
 .productContainer {
