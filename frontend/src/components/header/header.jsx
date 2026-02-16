@@ -46,7 +46,7 @@ export default ({ cart, userInfo, setUserInfo }) => {
   };
 
   return (
-    <div className={`amazon-header ${isSearchMode ? 'search-mode-active' : ''}`}>
+    <header className={`amazon-header ${isSearchMode ? 'search-mode-active' : ''}`}>
       <div className={`amazon-header-left-section ${isSearchMode ? 'hidden-mobile' : ''}`}>
         <Link to="/" className="logos">
           <img className="amazon-logo" src="images/4ya-logo.png" />
@@ -139,6 +139,6 @@ export default ({ cart, userInfo, setUserInfo }) => {
           <div className="cart-text">Cart</div>
         </Link>
       </div>
-    </div>
+    </header>
   );
 };

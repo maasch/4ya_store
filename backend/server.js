@@ -132,12 +132,24 @@ if (productCount === 0) {
   await DeliveryOption.bulkCreate(deliveryOptionsWithTimestamps);
   await CartItem.bulkCreate(cartItemsWithTimestamps);
   await Order.bulkCreate(ordersWithTimestamps);
-  await User.bulkCreate();
-  await ProductView.bulkCreate();
+  // Only bulk create when we have data to insert to avoid Sequelize errors
+  await User.bulkCreate([]);
+  await ProductView.bulkCreate([]);
   console.log('Default data added to the database.');
 }
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+server.on('error', (err) => {
+  if (err && err.code === 'EADDRINUSE') {
+    console.error(
+      `Port ${PORT} is already in use. Another process may be running.`
+    );
+    process.exit(1);
+  }
+  console.error('Server error:', err);
+  process.exit(1);
 });
