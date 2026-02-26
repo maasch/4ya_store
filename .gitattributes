@@ -1,7 +1,6 @@
 # Normalize line endings and avoid LF/CRLF warnings
 # Use text=auto as a sensible default and force LF for source files
 * text=auto
-
 # Force LF in source files to keep repository consistent
 *.py text eol=lf
 *.js text eol=lf
@@ -10,8 +9,7 @@
 *.css text eol=lf
 *.html text eol=lf
 *.md text eol=lf
-*.ipynb text eol=lf
-
+*.ipynb filter=lfs diff=lfs merge=lfs -text
 # Binary files should not be treated as text
 *.png binary
 *.jpg binary
