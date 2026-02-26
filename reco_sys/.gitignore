@@ -1,2 +1,4 @@
 # Ignore Python virtual environment
 venv311/
+*.jsonl
+processed_data/
