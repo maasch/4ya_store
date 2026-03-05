@@ -6,17 +6,15 @@ import session from 'express-session';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { defaultCart } from './defaultData/defaultCart.js';
 import { defaultDeliveryOptions } from './defaultData/defaultDeliveryOptions.js';
-import { defaultOrders } from './defaultData/defaultOrders.js';
 import { defaultProducts } from './defaultData/defaultProducts.js';
-import { CartItem } from './models/CartItem.js';
+
 import { DeliveryOption } from './models/DeliveryOption.js';
-import { Order } from './models/Order.js';
+
 import { Product } from './models/Product.js';
-import { ProductView } from './models/ProductView.js';
+
 import { sequelize } from './models/index.js';
-import { User } from './models/user.js';
+
 import cartItemRoutes from './routes/cartItems.js';
 import deliveryOptionRoutes from './routes/deliveryOptions.js';
 import login from './routes/login.js';
@@ -48,7 +46,7 @@ app.use(
     secret: 'adelex',
     store: sessionStore,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       secure: false,
       httpOnly: true,
@@ -116,25 +114,8 @@ if (productCount === 0) {
     })
   );
 
-  const cartItemsWithTimestamps = defaultCart.map((item, index) => ({
-    ...item,
-    createdAt: new Date(timestamp + index),
-    updatedAt: new Date(timestamp + index),
-  }));
-
-  const ordersWithTimestamps = defaultOrders.map((order, index) => ({
-    ...order,
-    createdAt: new Date(timestamp + index),
-    updatedAt: new Date(timestamp + index),
-  }));
-
   await Product.bulkCreate(productsWithTimestamps);
   await DeliveryOption.bulkCreate(deliveryOptionsWithTimestamps);
-  await CartItem.bulkCreate(cartItemsWithTimestamps);
-  await Order.bulkCreate(ordersWithTimestamps);
-  // Only bulk create when we have data to insert to avoid Sequelize errors
-  await User.bulkCreate([]);
-  await ProductView.bulkCreate([]);
   console.log('Default data added to the database.');
 }
 

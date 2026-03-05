@@ -1,7 +1,7 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import EmptyContainer from '../../components/emptyContainer/emptyContainer.jsx';
 import Footer from '../../components/footer/footer.jsx';
 import Header from '../../components/header/header.jsx';
@@ -9,12 +9,17 @@ import formatMoney from '../../utils/money.js';
 import './orders.css';
 export default ({ cart, loadCart, userInfo, setUserInfo }) => {
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!userInfo?.isAuthenticated) {
+      navigate('/signin');
+      return;
+    }
     axios.get('/api/orders?expand=products').then((response) => {
       setOrders(response.data);
     });
-  }, []);
+  }, [userInfo]);
 
   const handleBuyAgain = async (productId) => {
     await axios.post('/api/cart-items', {
