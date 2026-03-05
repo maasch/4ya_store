@@ -2,3 +2,4 @@
 venv311/
 *.jsonl
 processed_data/
+content_based_data/
