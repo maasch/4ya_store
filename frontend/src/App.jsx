@@ -10,8 +10,12 @@ import TrackingPage from './pages/tracking/tracking.jsx';
 function App() {
   let [cart, setCart] = useState([]);
   async function loadCart() {
-    let response = await axios.get('/api/cart-items?expand=product');
-    setCart(response.data);
+    try {
+      let response = await axios.get('/api/cart-items?expand=product');
+      setCart(response.data);
+    } catch {
+      setCart([]);
+    }
   }
   const [userInfo, setUserInfo] = useState({
     isAuthenticated: false,
@@ -21,18 +25,21 @@ function App() {
     loadCart();
     fetchUserInfo();
   }, []);
+  useEffect(() => {
+    loadCart();
+  }, [userInfo.isAuthenticated]);
   async function fetchUserInfo() {
     let response = await axios.get('/api/login/check');
     setUserInfo(response.data);
   }
   return (
-      <Routes>
-        <Route index element={<HomePage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
-        <Route path="/checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
-        <Route path="/orders" element={<OrdersPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
-        <Route path="/product" element={<ProductPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
-        <Route path="/signin" element={<SignInPage cart={cart}  userInfo={userInfo} setUserInfo={setUserInfo} />} />
-        <Route path="/tracking" element={<TrackingPage cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />} />  
+    <Routes>
+      <Route index element={<HomePage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+      <Route path="/checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+      <Route path="/orders" element={<OrdersPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+      <Route path="/product" element={<ProductPage cart={cart} loadCart={loadCart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+      <Route path="/signin" element={<SignInPage cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
+      <Route path="/tracking" element={<TrackingPage cart={cart} userInfo={userInfo} setUserInfo={setUserInfo} />} />
     </Routes>
   );
 }

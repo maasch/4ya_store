@@ -1,4 +1,5 @@
 import express from 'express';
+import requireAuth from '../middleware/requireAuth.js';
 import { CartItem } from '../models/CartItem.js';
 import { DeliveryOption } from '../models/DeliveryOption.js';
 import { Order } from '../models/Order.js';
@@ -6,9 +7,14 @@ import { Product } from '../models/Product.js';
 
 const router = express.Router();
 
+// All order routes require authentication
+router.use(requireAuth);
+
 router.get('/', async (req, res) => {
+  const userId = req.session.userId;
   const expand = req.query.expand;
   let orders = await Order.unscoped().findAll({
+    where: { userId },
     order: [['orderTimeMs', 'DESC']],
   });
 
@@ -36,7 +42,8 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const cartItems = await CartItem.findAll();
+  const userId = req.session.userId;
+  const cartItems = await CartItem.findAll({ where: { userId } });
 
   if (cartItems.length === 0) {
     return res.status(400).json({ error: 'Cart is empty' });
@@ -71,21 +78,23 @@ router.post('/', async (req, res) => {
   totalCostCents = Math.round(totalCostCents * 1.1);
 
   const order = await Order.create({
+    userId,
     orderTimeMs: Date.now(),
     totalCostCents,
     products,
   });
 
-  await CartItem.destroy({ where: {} });
+  await CartItem.destroy({ where: { userId } });
 
   res.status(201).json(order);
 });
 
 router.get('/:orderId', async (req, res) => {
+  const userId = req.session.userId;
   const { orderId } = req.params;
   const expand = req.query.expand;
 
-  let order = await Order.findByPk(orderId);
+  let order = await Order.findOne({ where: { id: orderId, userId } });
   if (!order) {
     return res.status(404).json({ error: 'Order not found' });
   }

@@ -1,11 +1,13 @@
 import bcrypt from 'bcrypt';
 import express from 'express';
+import { CartItem } from '../models/CartItem.js';
 import { User } from '../models/user.js';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
     const { email, password } = req.body;
+    const anonymousSessionId = req.sessionID;
     const user = await User.findOne({ where: { email } });
     if (user) {
       if (await bcrypt.compare(password, user.password)) {
@@ -13,6 +15,23 @@ router.post('/', async (req, res) => {
         req.session.userId = user.id;
         req.session.userName = user.name;
         req.session.userEmail = user.email;
+
+        // Merge anonymous cart items into user's cart
+        const anonymousItems = await CartItem.findAll({ where: { sessionId: anonymousSessionId } });
+        for (const anonItem of anonymousItems) {
+          const existing = await CartItem.findOne({
+            where: { productId: anonItem.productId, userId: user.id }
+          });
+          if (existing) {
+            existing.quantity += anonItem.quantity;
+            await existing.save();
+            await anonItem.destroy();
+          } else {
+            anonItem.userId = user.id;
+            anonItem.sessionId = null;
+            await anonItem.save();
+          }
+        }
 
         return res.json({
           message: `Welcome back, ${user.name}! `,

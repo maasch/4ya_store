@@ -1,12 +1,17 @@
 import express from 'express';
 import { CartItem } from '../models/CartItem.js';
-import { Product } from '../models/Product.js';
 import { DeliveryOption } from '../models/DeliveryOption.js';
+import { Product } from '../models/Product.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const cartItems = await CartItem.findAll();
+  // Scope by userId if logged in, else sessionId
+  const where = req.session.userId
+    ? { userId: req.session.userId }
+    : { sessionId: req.sessionID };
+
+  const cartItems = await CartItem.findAll({ where });
   let totalItems = 0;
   let productCostCents = 0;
   let shippingCostCents = 0;

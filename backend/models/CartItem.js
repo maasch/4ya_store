@@ -10,6 +10,18 @@ export const CartItem = sequelize.define('CartItem', {
       key: 'id'
     }
   },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
+  },
+  sessionId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false

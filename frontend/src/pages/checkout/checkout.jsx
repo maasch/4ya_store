@@ -7,8 +7,9 @@ import './checkout-header.css';
 import './checkout-main.css';
 import OrderSummary from './order-summary.jsx';
 import PaymentSummary from './PaymentSummary.jsx';
-export default ({ cart, loadCart }) => {
+export default ({ cart, loadCart, userInfo }) => {
   const navigate = useNavigate();
+
   let totalQuantity = 0;
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
@@ -75,6 +76,10 @@ export default ({ cart, loadCart }) => {
             <PaymentSummary
               paymentSummary={paymentSummary}
               onPlaceOrder={async () => {
+                if (!userInfo?.isAuthenticated) {
+                  navigate('/signin');
+                  return;
+                }
                 await axios.post('/api/orders');
                 navigate('/orders');
                 loadCart();

@@ -11,7 +11,7 @@ export default ({ product, loadCart }) => {
   const navigate = useNavigate();
 
   const addToCart = async (e) => {
-    e.preventDefault();      
+    e.preventDefault();
     e.stopPropagation();
     await axios.post('/api/cart-items', {
       productId: product.id,
@@ -40,19 +40,19 @@ export default ({ product, loadCart }) => {
   const handleProductClick = (e) => {
     // Only navigate if clicking on non-interactive elements
     const target = e.target;
-    const isInteractiveElement = 
+    const isInteractiveElement =
       target.tagName === 'SELECT' ||
       target.tagName === 'BUTTON' ||
       target.closest('select') ||
       target.closest('button');
-    
+
     if (!isInteractiveElement) {
       navigate(`/product?id=${product.id}`);
     }
   };
 
   return (
-    <div 
+    <div
       className={styles.productContainer}
       onClick={handleProductClick}
     >
