@@ -1,46 +1,55 @@
-ALL PRODUCTS
-↓ (business rules)
-ELIGIBLE PRODUCTS
-↓ (weights & scoring)
-RANKED RECOMMENDATIONS
+## SVD-Based Recommendation Architecture
 
-1. Business Positioning
-2. Business Rules (filters)
-3. Content-Based Scoring
-4. Collaborative Scoring
-5. Hybrid Combination
-6. Final Ranking
-
+```
 User requests recommendations
-↓
-Apply business rules (filter)
-↓
-Content-based scoring
-↓
-Collaborative scoring
-↓
-Hybrid weighting
-↓
-Rank products
-↓
-Return top N products
+    ↓
+Node.js: GET /api/recommendations
+    ↓
+Node.js → Python SVD Service (HTTP)
+    ↓
+SVD Service: predict ratings for all items → return ranked item IDs
+    ↓
+Node.js: fetch products from DB by item IDs
+    ↓
+Apply business rules (rules.js — price, category, rating, stock filters)
+    ↓
+Return filtered top-N products to frontend
+```
 
+### Components
+
+```
 backend/
-└── recommender/
-├── rules.js ← business rules
-├── contentBased.js ← similarity logic
-├── collaborative.js ← behavior logic
-├── utils.js ← helpers
-└── index.js ← hybrid orchestrator
+├── svd_service/          ← Python SVD microservice
+│   ├── train_model.py    ← Train SVD, save model
+│   ├── server.py         ← FastAPI (port 8000)
+│   ├── requirements.txt
+│   ├── svd_model.pkl     ← Trained model (generated)
+│   ├── item_ids.pkl      ← Item ID list (generated)
+│   └── user_ids.pkl      ← User ID list (generated)
+├── recommender/
+│   ├── rules.js          ← Business positioning rules (kept)
+│   └── schema.md         ← This file
+└── routes/
+    └── recommendations.js ← Calls SVD service + applies rules.js
+```
 
-roles:
+### Data Flow
 
-rules.js => filters products
+- **Training data**: `reco_sys/processed_data/interactions.csv` (user_id, item_id, rating)
+- **Model**: SVD from `surprise` library (100 factors, 20 epochs)
+- **Serving**: FastAPI on port 8000, loaded at startup
 
-contentBased.js => scores similarity using product data
+### Cold Start Handling
 
-collaborative.js => scores based on other users’ behavior
+- **Known user**: Personalized SVD predictions
+- **Unknown user / no user**: Popularity-based fallback (avg rating × interaction count)
 
-index.js => combines everything
+### Business Rules (rules.js)
 
-“The recommendation system follows a layered approach where business rules ensure strategic alignment, content-based filtering ensures relevance based on product characteristics, and collaborative filtering leverages user interactions. A hybrid strategy combines both algorithms to improve recommendation quality and robustness.”
+SVD results are filtered through business positioning rules:
+- In-stock only (stock > 0)
+- Allowed categories: Clothing, Shoes, Kitchen, Home, Bathroom, Electronics, Accessories, Lifestyle
+- Max price: 150.00 (15000 cents)
+- Min average rating: 3.5 stars
+- Excludes current product and cart items
