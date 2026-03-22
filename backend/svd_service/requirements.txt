@@ -1,0 +1,5 @@
+scikit-surprise==1.1.4
+fastapi==0.115.12
+uvicorn==0.34.3
+pandas==2.2.3
+joblib==1.5.1
