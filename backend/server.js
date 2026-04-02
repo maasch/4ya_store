@@ -12,6 +12,7 @@ import { defaultProducts } from './defaultData/defaultProducts.js';
 import { DeliveryOption } from './models/DeliveryOption.js';
 
 import { Product } from './models/Product.js';
+import { migrator } from './migrations.js';
 
 import { sequelize } from './models/index.js';
 
@@ -99,6 +100,13 @@ app.use((err, req, res, next) => {
 // Use `/api/reset` (force sync) or set `DB_SYNC_ALTER=true` when you explicitly want schema alteration.
 const shouldAlter = process.env.DB_SYNC_ALTER === 'true';
 await sequelize.sync(shouldAlter ? { alter: true } : undefined);
+
+try {
+  await migrator.up();
+  console.log('Migrations executed successfully.');
+} catch (error) {
+  console.error('Failed to run migrations', error);
+}
 
 const productCount = await Product.count();
 if (productCount === 0) {
