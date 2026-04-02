@@ -54,7 +54,8 @@ router.get('/', async (req, res) => {
       }
 
       const response = await fetch(
-        `${SVD_SERVICE_URL}/recommend?${params.toString()}`
+        `${SVD_SERVICE_URL}/recommend?${params.toString()}`,
+        { signal: AbortSignal.timeout(3000) }
       );
 
       if (response.ok) {
