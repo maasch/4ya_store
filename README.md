@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="pics/pfe_cover_image_1775080078268.png" alt="4YA Store Cover" width="100%" />
+  <img src="https://raw.githubusercontent.com/maasch/4ya_store/main/pics/pfe_cover_image_1775080078268.png" alt="4YA Store Cover" width="100%" />
 
   <h1>🛒 4YA Store</h1>
   <p><strong>A Modern E-Commerce Platform with a Personalized AI Recommendation Engine</strong></p>
@@ -34,7 +34,7 @@
 
 | Homepage | Product Details |
 | :---: | :---: |
-| <img src="pics/homepage_4ya_store_1775080955949.png" alt="Homepage view" width="100%"/> | <img src="pics/product_detail_4ya_store_1775080983249.png" alt="Product details view" width="100%"/> |
+| <img src="https://raw.githubusercontent.com/maasch/4ya_store/main/pics/homepage_4ya_store_1775080955949.png" alt="Homepage view" width="100%"/> | <img src="https://raw.githubusercontent.com/maasch/4ya_store/main/pics/product_detail_4ya_store_1775080983249.png" alt="Product details view" width="100%"/> |
 
 <br/>
 
@@ -43,7 +43,7 @@
 Our solution follows a decoupled, microservices-oriented architecture:
 
 <div align="center">
-  <img src="pics/tech_architecture_1775080098855.png" alt="Technical Architecture" width="80%" />
+  <img src="https://raw.githubusercontent.com/maasch/4ya_store/main/pics/tech_architecture_1775080098855.png" alt="Technical Architecture" width="80%" />
 </div>
 
 1. **Jupyter Notebooks (`reco_sys`)**: Used for data mining, model training, and comparing Content-Based, Collaborative Filtering, and Hybrid algorithms.
