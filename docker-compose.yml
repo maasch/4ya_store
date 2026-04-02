@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  svd_service:
+    build:
+      context: ./backend/svd_service
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3691:3691"
+    environment:
+      - SVD_SERVICE_URL=http://svd_service:8000
+      - FRONTEND_URL=http://localhost
+    depends_on:
+      - svd_service
+    restart: unless-stopped
+    volumes:
+      - backend_data:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_data:
