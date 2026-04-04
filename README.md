@@ -21,12 +21,12 @@
 
 ## Key Features
 
-- ** Modern Storefront**: A lightning-fast, highly responsive Single Page Application built with React.
-- ** AI-Driven Recommendations**: Uses Singular Value Decomposition (SVD) and collaborative filtering models to rank and recommend items based on interaction history.
-- ** Smart Fallback Mechanisms**: Gracefully handles "Cold-Start" scenarios, providing default or rating-based suggestions for new users when interaction data is scarce.
-- ** Contextual Rule Engine**: Implements dynamic business logic (filtering out out-of-stock items, hiding currently viewed products, category enforcement) above the SVD output.
-- ** Automated Seeding**: Instantly provisions the SQLite database with default e-commerce products, users, and scenarios to guarantee a seamless developer experience out of the box.
-- ** Dockerized Environment**: A fully containerized setup for a one-click multi-service launch.
+- **Modern Storefront**: A lightning-fast, highly responsive Single Page Application built with React.
+- **AI-Driven Recommendations**: Uses Singular Value Decomposition (SVD) and collaborative filtering models to rank and recommend items based on interaction history.
+- **Smart Fallback Mechanisms**: Gracefully handles "Cold-Start" scenarios, providing default or rating-based suggestions for new users when interaction data is scarce.
+- **Contextual Rule Engine**: Implements dynamic business logic (filtering out out-of-stock items, hiding currently viewed products, category enforcement) above the SVD output.
+- **Automated Seeding**: Instantly provisions the SQLite database with default e-commerce products, users, and scenarios to guarantee a seamless developer experience out of the box.
+- **Dockerized Environment**: A fully containerized setup for a one-click multi-service launch.
 
 <br/>
 
