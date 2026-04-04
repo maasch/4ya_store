@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/maasch/4ya_store@main/pics/pfe_cover_image_1775080078268.png" alt="4YA Store Cover" width="100%" />
 
-  <h1>🛒 4YA Store</h1>
+  <h1>4YA Store</h1>
   <p><strong>A Modern E-Commerce Platform with a Personalized AI Recommendation Engine</strong></p>
 
   <p>
@@ -15,22 +15,22 @@
 
 <hr />
 
-## 📖 Overview
+## Overview
 
 **4YA Store** is a full-stack e-commerce web application developed as a final year project (PFE). Beyond traditional e-commerce capabilities, its standout feature is a deeply integrated **Personalized Recommendation System**. By leveraging advanced Machine Learning algorithms, 4YA Store dynamically adapts to user behaviors, serving highly tailored product recommendations in real-time.
 
-## ✨ Key Features
+## Key Features
 
-- **🛍️ Modern Storefront**: A lightning-fast, highly responsive Single Page Application built with React.
-- **🤖 AI-Driven Recommendations**: Uses Singular Value Decomposition (SVD) and collaborative filtering models to rank and recommend items based on interaction history.
-- **🛡️ Smart Fallback Mechanisms**: Gracefully handles "Cold-Start" scenarios, providing default or rating-based suggestions for new users when interaction data is scarce.
-- **⚙️ Contextual Rule Engine**: Implements dynamic business logic (filtering out out-of-stock items, hiding currently viewed products, category enforcement) above the SVD output.
-- **🌱 Automated Seeding**: Instantly provisions the SQLite database with default e-commerce products, users, and scenarios to guarantee a seamless developer experience out of the box.
-- **🐳 Dockerized Environment**: A fully containerized setup for a one-click multi-service launch.
+- ** Modern Storefront**: A lightning-fast, highly responsive Single Page Application built with React.
+- ** AI-Driven Recommendations**: Uses Singular Value Decomposition (SVD) and collaborative filtering models to rank and recommend items based on interaction history.
+- ** Smart Fallback Mechanisms**: Gracefully handles "Cold-Start" scenarios, providing default or rating-based suggestions for new users when interaction data is scarce.
+- ** Contextual Rule Engine**: Implements dynamic business logic (filtering out out-of-stock items, hiding currently viewed products, category enforcement) above the SVD output.
+- ** Automated Seeding**: Instantly provisions the SQLite database with default e-commerce products, users, and scenarios to guarantee a seamless developer experience out of the box.
+- ** Dockerized Environment**: A fully containerized setup for a one-click multi-service launch.
 
 <br/>
 
-## 📸 Platform Sneak Peek
+## Platform Sneak Peek
 
 | Homepage | Product Details |
 | :---: | :---: |
@@ -38,7 +38,7 @@
 
 <br/>
 
-## 🧠 System Architecture
+## System Architecture
 
 Our solution follows a decoupled, microservices-oriented architecture:
 
@@ -53,7 +53,7 @@ Our solution follows a decoupled, microservices-oriented architecture:
 
 <br/>
 
-## 🐳 Running the Project (Docker)
+## Running the Project (Docker)
 
 The fastest and most reliable way to run the 4YA Store is by using **Docker Compose**. It spins up the UI, the backend server, and the Python recommender service, automatically linking and exposing them correctly.
 
@@ -110,7 +110,7 @@ npm run dev # Runs on http://localhost:5173
 
 <br/>
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 4YA_Store/
@@ -131,5 +131,5 @@ npm run dev # Runs on http://localhost:5173
 
 <br/>
 
-## 🤝 Authors & Credits
+## Authors & Credits
 Developed as an academic capstone module requirement (PFE).
